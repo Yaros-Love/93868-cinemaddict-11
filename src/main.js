@@ -289,7 +289,7 @@ const render = (container, template, place = `beforeend`) => {
 
 const renderList = (container, template, count, place = `beforeend`) => {
   for (let i = 0; i < count; i++) {
-    render(container, template, place = `beforeend`);
+    render(container, template, place);
   }
 };
 
