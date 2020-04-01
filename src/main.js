@@ -302,19 +302,22 @@ render(mainElement, createSortTemplate());
 render(mainElement, createFilmsTemplate());
 
 const filmsElement = mainElement.querySelector(`.films`);
-
 render(filmsElement, createFilmsContainerTemplate());
 render(filmsElement, createFilmTopRatedContainerTemplate());
 render(filmsElement, createFilmMostCommentedContainerTemplate());
 
-const filmsListElement = filmsElement.querySelector(`.films-list .films-list__container`);
-renderList(filmsListElement, createFilmCardTemplate(), CARD_COUNT);
+const filmsListContainerElement = filmsElement.querySelector(`.films-list .films-list__container`);
+renderList(filmsListContainerElement, createFilmCardTemplate(), CARD_COUNT);
+render(filmsListContainerElement, createButtonShowMoreTemplate(), `afterend`);
 
 const filmsListExtraElements = filmsElement.querySelectorAll(`.films-list--extra .films-list__container`);
-
-filmsListExtraElements.forEach((container, i) => {
+filmsListExtraElements.forEach((container) => {
   renderList(container, createFilmCardTemplate(), EXTRA_CARD_COUNT);
 });
 
 const footerElement = document.querySelector(`.footer`);
 render(footerElement, createFooterStatTemplate());
+render(footerElement, createFilmDetailsTemplate(), `afterend`);
+
+const popupDetailsElement = document.querySelector(`.film-details`);
+popupDetailsElement.style.display = `none`;
