@@ -10,14 +10,6 @@ const EmotionsMap = new Map([
   [`angry`, `public/images/emoji/angry.png`]
 ]);
 
-const DefaultNames = [
-  `Albert`,
-  `Michael`,
-  `Isaac`,
-  `Mary`,
-  `Steven`
-];
-
 const comment = {
   text: getRandomArrayItem(DefaultSentences),
   emotion: EmotionsMap.get(getRandomArrayItem(Emotions)),

@@ -10,4 +10,33 @@ const DefaultSentences = [
   `Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus. `,
 ];
 
-export { DefaultSentences };
+const DefaultNames = [
+  `Albert Einstein`,
+  `Niels Bohr`,
+  `Stephen Hawking`,
+  `Isaac Newton`,
+  `Galileo Galilei `,
+  `Nikola Tesla`,
+  `Marie Curie `,
+  `Richard Feynman`,
+  `Michael Faraday`,
+  `Max Planck`,
+  `Alessandro Volta`,
+  `James Clerk Maxwell`,
+  `Erwin Schrodinger`,
+  `Werner Heisenberg`
+];
+
+const Countries = [
+  `Belarus`,
+  `Czechia`,
+  `Turkmenistan`,
+  `Qatar`,
+  `Cambodia`,
+  `Australia`,
+  `Uruguay`,
+  `Viet Nam`,
+  `Tuvalu`
+];
+
+export { DefaultSentences, DefaultNames, Countries };

@@ -1,5 +1,5 @@
-import { DefaultSentences } from '../const.js';
-import { getRandomArrayItem, getRandomIntegerNumber } from '../utils.js';
+import { DefaultSentences, DefaultNames, Countries } from '../const.js';
+import { getRandomArrayItem, getRandomIntegerNumber, getRandomArray } from '../utils.js';
 import {DefaultNames} from './comment.js'
 
 
@@ -31,14 +31,6 @@ const Genres = [
   `Triller`
 ];
 
-const getRandomDescription = (countSentences) => {
-  let description = ``;
-  for (let i = 0; i < countSentences; i++) {
-    description += DefaultSentences[i];
-  }
-  return description;
-};
-
 const getFilmDuration = (minutes) => {
   if (minutes > 60) {
     const hours = Math.trunc(minutes / 60);
@@ -51,21 +43,32 @@ const getFilmDuration = (minutes) => {
   }
 };
 
-const film = {
-  title: getRandomArrayItem(FilmsTitles),
-  originalTitle: film.title,
-  poster: getRandomArrayItem(Posters),
-  rating: `${getRandomIntegerNumber(1, 9).getRandomIntegerNumber(1, 9)}`,
-  productionDate: getRandomIntegerNumber(1920, 1970),
-  duration: `${getFilmDuration(getRandomIntegerNumber(30, 350))}`,
-  genres: [],
-  description: getRandomDescription(getRandomIntegerNumber(1, 5)),
-  commentsCount: getRandomIntegerNumber(0, 5),
-  director: getRandomArrayItem(DefaultNames),
-  scenarists: [],
-  cast: [],
-  releaseDate: ``,
-  country: ``,
-  fullDescription: getRandomDescription(getRandomIntegerNumber(10, 25)),
-  ageRating: null,
+const getRandomDate = () => {
+  const targetDate = new Date();
+  const diffValue = sign * getRandomIntegerNumber(0, 8);
+
+  targetDate.setDate(targetDate.getDate() + diffValue);
+
+  return targetDate;
 };
+
+const generateFilm = () => {
+   return {
+    title: getRandomArrayItem(FilmsTitles),
+    originalTitle: film.title,
+    poster: getRandomArrayItem(Posters),
+    rating: `${getRandomIntegerNumber(1, 9).getRandomIntegerNumber(1, 9)}`,
+    productionDate: getRandomIntegerNumber(1920, 1970),
+    duration: `${getFilmDuration(getRandomIntegerNumber(30, 350))}`,
+    genres: getRandomArray(Genres),
+    description: getRandomArray(DefaultSentences, getRandomIntegerNumber(1, 6)).join(` `),
+    commentsCount: getRandomIntegerNumber(0, 5),
+    director: getRandomArrayItem(DefaultNames),
+    scenarists: getRandomArray(DefaultNames),
+    cast: getRandomArray(DefaultNames),
+    releaseDate: `2019/12/31 23:59`,
+    country: getRandomArrayItem(Countries),
+    fullDescription: getRandomDescription(getRandomIntegerNumber(10, 25)),
+    ageRating: getRandomIntegerNumber(6, 19),
+  };
+}
