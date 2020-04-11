@@ -1,4 +1,4 @@
-import { DefaultSentences } from '../const.js';
+import { DefaultSentences, DefaultNames } from '../const.js';
 import { getRandomArrayItem, getRandomIntegerNumber } from '../utils.js';
 
 const Emotions = [`smile`, `sleeping`, `puke`, `angry`];
@@ -10,11 +10,19 @@ const EmotionsMap = new Map([
   [`angry`, `public/images/emoji/angry.png`]
 ]);
 
-const comment = {
-  text: getRandomArrayItem(DefaultSentences),
-  emotion: EmotionsMap.get(getRandomArrayItem(Emotions)),
-  author: getRandomArrayItem(DefaultNames),
-  date: `2019/12/31 23:59`,
+const generateComment = () => {
+  return {
+    text: getRandomArrayItem(DefaultSentences),
+    emotion: EmotionsMap.get(getRandomArrayItem(Emotions)),
+    author: getRandomArrayItem(DefaultNames),
+    date: `2019/12/31 23:59`,
+  };
 };
 
-export { DefaultNames };
+const generateComments = (count) => {
+  return new Array(count)
+    .fill(``)
+    .map(generateComment);
+};
+
+export { DefaultNames, generateComments};

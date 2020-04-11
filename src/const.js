@@ -1,3 +1,5 @@
+const ALL_FILMS_COUNT = 20;
+
 const DefaultSentences = [
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit. `,
   `Cras aliquet varius magna, non porta ligula feugiat eget. `,
@@ -39,4 +41,4 @@ const Countries = [
   `Tuvalu`
 ];
 
-export { DefaultSentences, DefaultNames, Countries };
+export { DefaultSentences, DefaultNames, Countries, ALL_FILMS_COUNT };
