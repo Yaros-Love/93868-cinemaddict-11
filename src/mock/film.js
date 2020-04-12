@@ -1,12 +1,12 @@
 import { DefaultSentences, DefaultNames, Countries } from '../const.js';
-import { getRandomArrayItem, getRandomIntegerNumber, getRandomArray } from '../utils.js';
-import { generateComments } from './comment.js'
+import { getRandomArrayItem, getRandomIntegerNumber, getRandomArray, getDate } from '../utils.js';
+import { generateComments } from './comment.js';
 
 
 const FilmsTitles = [
   `Made for Each Other`,
   `Santa Claus Conquers the Martians`,
-   `The Great Flamarion`,
+  `The Great Flamarion`,
   `The Man with the Golden Arm`,
   `Sagebrush Trail`,
   `The Dance of Life`,
@@ -37,19 +37,9 @@ const getFilmDuration = (minutes) => {
     minutes = Math.floor((((minutes / 60 - hours) * 60) / 100) * 100);
 
     return `${hours}h ${minutes}min`;
-  }
-  else {
+  } else {
     return `${minutes}min`;
   }
-};
-
-const getRandomDate = () => {
-  const targetDate = new Date();
-  const diffValue = sign * getRandomIntegerNumber(0, 8);
-
-  targetDate.setDate(targetDate.getDate() + diffValue);
-
-  return targetDate;
 };
 
 const generateFilm = () => {
@@ -57,18 +47,18 @@ const generateFilm = () => {
     title: getRandomArrayItem(FilmsTitles),
     originalTitle: getRandomArrayItem(FilmsTitles),
     poster: getRandomArrayItem(Posters),
-    rating: `${getRandomIntegerNumber(1, 9)}.${getRandomIntegerNumber(1, 9)}`,
+    rating: `${getRandomIntegerNumber(5, 9)}.${getRandomIntegerNumber(1, 9)}`,
     productionDate: getRandomIntegerNumber(1920, 1970),
     duration: `${getFilmDuration(getRandomIntegerNumber(30, 350))}`,
     genres: getRandomArray(Genres),
     description: getRandomArray(DefaultSentences, getRandomIntegerNumber(1, 6)).join(` `),
     comments: generateComments(getRandomIntegerNumber(0, 5)),
     director: getRandomArrayItem(DefaultNames),
-    scenarists: getRandomArray(DefaultNames),
-    cast: getRandomArray(DefaultNames),
-    releaseDate: `2019/12/31 23:59`,
+    scenarists: getRandomArray(DefaultNames).join(`, `),
+    cast: getRandomArray(DefaultNames).join(`, `),
+    releaseDate: getDate(),
     country: getRandomArrayItem(Countries),
-    fullDescription: getRandomArray(DefaultSentences,getRandomIntegerNumber(10, 25)),
+    fullDescription: getRandomArray(DefaultSentences, getRandomIntegerNumber(20, 35)).join(` `),
     ageRating: getRandomIntegerNumber(6, 19),
   };
 };

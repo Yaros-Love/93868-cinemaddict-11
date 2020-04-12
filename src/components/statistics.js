@@ -1,6 +1,9 @@
 const createFooterStatTemplate = (moviesCount) => {
+  let numberFormat = new Intl.NumberFormat(`ru`);
+  numberFormat = numberFormat.format(moviesCount);
+
   return (
-    `<p>${moviesCount} movies inside</p>`
+    `<p>${numberFormat} movies inside</p>`
   );
 };
 

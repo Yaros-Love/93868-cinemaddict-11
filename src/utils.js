@@ -20,4 +20,30 @@ const getRandomArray = (baseArray, count = baseArray.length) => {
   return newArray;
 };
 
-export { getRandomIntegerNumber, getRandomArrayItem, getRandomArray };
+const getRandomDate = () => {
+  const targetDate = new Date();
+  const sign = -1;
+  const diffValue = sign * getRandomIntegerNumber(0, 8);
+
+  targetDate.setDate(targetDate.getDate() + diffValue);
+
+  return targetDate;
+};
+
+const castTimeFormat = (value) => {
+  return value < 10 ? `0${value}` : String(value);
+}
+
+
+const getDate = () => {
+  const targetDate = Math.random() > 0.5 ? new Date() : getRandomDate();
+  const year = targetDate.getFullYear()
+  let month = castTimeFormat(targetDate.getMonth() + 1)
+  let day = castTimeFormat(targetDate.getDate())
+  let hours = castTimeFormat(targetDate.getHours())
+  let minutes = castTimeFormat(targetDate.getMinutes())
+
+  return `${year}/${month}/${day} ${hours}:${minutes}`
+}
+
+export { getRandomIntegerNumber, getRandomArrayItem, getRandomArray, getDate };

@@ -81,7 +81,16 @@ const footerStatisticsElement = footerElement.querySelector(`.footer__statistics
 const moviesCount = getRandomIntegerNumber(100000, 150000);
 
 render(footerStatisticsElement, createFooterStatTemplate(moviesCount));
-render(footerElement, createFilmDetailsTemplate(), `afterend`);
 
-const popupDetailsElement = document.querySelector(`.film-details`);
-popupDetailsElement.style.display = `none`;
+const renderedFilmsCard = filmsElement.querySelectorAll(`.film-card`);
+
+renderedFilmsCard.forEach((card, i) => {
+  card.addEventListener(`click`, () => {
+    render(footerElement, createFilmDetailsTemplate(films[i]), `afterend`);
+    const closePopupButton = document.querySelector(`.film-details .film-details__close-btn`);
+    closePopupButton.addEventListener(`click`, () => {
+      const popupDetailsElement = document.querySelector(`.film-details`);
+      popupDetailsElement.remove();
+    });
+  });
+});
