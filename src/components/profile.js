@@ -26,4 +26,4 @@ const createProfileTemplate = (ratingNumber) => {
   );
 };
 
-export { createProfileTemplate };
+export {createProfileTemplate};

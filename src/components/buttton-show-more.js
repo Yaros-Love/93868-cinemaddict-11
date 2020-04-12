@@ -4,4 +4,4 @@ const createButtonShowMoreTemplate = () => {
   );
 };
 
-export { createButtonShowMoreTemplate };
+export {createButtonShowMoreTemplate};

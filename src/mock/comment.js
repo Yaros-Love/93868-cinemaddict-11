@@ -1,5 +1,5 @@
-import { DefaultSentences, DefaultNames } from '../const.js';
-import { getRandomArrayItem, getRandomArray, getDate } from '../utils.js';
+import {DefaultSentences, DefaultNames} from '../const.js';
+import {getRandomArrayItem, getRandomArray, getDate} from '../utils.js';
 
 const Emotions = [`smile`, `sleeping`, `puke`, `angry`];
 const generateComment = () => {
@@ -17,4 +17,4 @@ const generateComments = (count) => {
     .map(generateComment);
 };
 
-export { DefaultNames, generateComments};
+export {DefaultNames, generateComments};

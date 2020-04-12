@@ -1,5 +1,5 @@
 const createFilterMarkup = (filter, isActive) => {
-  const isFilterAll = !!(filter.name === 'all');
+  const isFilterAll = !!(filter.name === `all`);
   return (`
     <a href="#${filter.name}" class="main-navigation__item
     ${isActive ? `main-navigation__item--active` : ``}">
@@ -20,4 +20,4 @@ const createMenuTemplate = (filters) => {
   );
 };
 
-export { createMenuTemplate };
+export {createMenuTemplate};

@@ -7,4 +7,4 @@ const createFooterStatTemplate = (moviesCount) => {
   );
 };
 
-export { createFooterStatTemplate };
+export {createFooterStatTemplate};

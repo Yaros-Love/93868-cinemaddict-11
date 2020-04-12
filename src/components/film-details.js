@@ -77,7 +77,7 @@ const createCommentsMarkup = (comments) => {
 };
 
 const createFilmDetailsTemplate = (film) => {
-  const { poster, title, originalTitle, rating, ageRating, fullDescription, comments } = film;
+  const {poster, title, originalTitle, rating, ageRating, fullDescription, comments} = film;
 
   const tableMarkup = createDetailsTableMarkup(film);
   const filmControlsMarkup = createControlsMarkup();
@@ -168,4 +168,4 @@ const createFilmDetailsTemplate = (film) => {
   );
 };
 
-export { createFilmDetailsTemplate };
+export {createFilmDetailsTemplate};

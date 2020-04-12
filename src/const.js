@@ -41,4 +41,4 @@ const Countries = [
   `Tuvalu`
 ];
 
-export { DefaultSentences, DefaultNames, Countries, ALL_FILMS_COUNT };
+export {DefaultSentences, DefaultNames, Countries, ALL_FILMS_COUNT};

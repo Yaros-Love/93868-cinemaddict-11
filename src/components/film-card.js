@@ -1,6 +1,6 @@
 
 const createFilmCardTemplate = (film) => {
-  const { title, poster, rating, productionDate, duration, genres, comments, description } = film;
+  const {title, poster, rating, productionDate, duration, genres, comments, description} = film;
 
   const longDescriptionFormat = description.length < 140 ? description : description.slice(0, 139) + `...`;
 
@@ -25,4 +25,4 @@ const createFilmCardTemplate = (film) => {
   );
 };
 
-export { createFilmCardTemplate };
+export {createFilmCardTemplate};

@@ -1,6 +1,6 @@
-import { DefaultSentences, DefaultNames, Countries } from '../const.js';
-import { getRandomArrayItem, getRandomIntegerNumber, getRandomArray, getDate } from '../utils.js';
-import { generateComments } from './comment.js';
+import {DefaultSentences, DefaultNames, Countries} from '../const.js';
+import {getRandomArrayItem, getRandomIntegerNumber, getRandomArray, getDate} from '../utils.js';
+import {generateComments} from './comment.js';
 
 
 const FilmsTitles = [
@@ -69,4 +69,4 @@ const generateFilms = (count) => {
     .map(generateFilm);
 };
 
-export { generateFilms };
+export {generateFilms};

@@ -1,18 +1,18 @@
-import { createProfileTemplate } from './components/profile.js';
-import { createMenuTemplate } from './components/menu.js';
-import { createSortTemplate } from './components/sort.js';
-import { createFilmsTemplate } from './components/films.js';
-import { createFilmsContainerTemplate } from './components/films-container.js';
-import { createFilmTopRatedContainerTemplate } from './components/film-top-rated.js';
-import { createFilmMostCommentedContainerTemplate } from './components/film-most-commented.js';
-import { createFilmCardTemplate } from './components/film-card.js';
-import { createButtonShowMoreTemplate } from './components/buttton-show-more.js';
-import { createFilmDetailsTemplate } from './components/film-details.js';
-import { createFooterStatTemplate } from './components/statistics.js';
-import { ALL_FILMS_COUNT } from './const.js';
-import { generateFilms } from './mock/film.js'
-import { getFilters } from './mock/filter.js';
-import { getRandomIntegerNumber } from './utils.js';
+import {createProfileTemplate} from './components/profile.js';
+import {createMenuTemplate} from './components/menu.js';
+import {createSortTemplate} from './components/sort.js';
+import {createFilmsTemplate} from './components/films.js';
+import {createFilmsContainerTemplate} from './components/films-container.js';
+import {createFilmTopRatedContainerTemplate} from './components/film-top-rated.js';
+import {createFilmMostCommentedContainerTemplate} from './components/film-most-commented.js';
+import {createFilmCardTemplate} from './components/film-card.js';
+import {createButtonShowMoreTemplate} from './components/buttton-show-more.js';
+import {createFilmDetailsTemplate} from './components/film-details.js';
+import {createFooterStatTemplate} from './components/statistics.js';
+import {ALL_FILMS_COUNT} from './const.js';
+import {generateFilms} from './mock/film.js';
+import {getFilters} from './mock/filter.js';
+import {getRandomIntegerNumber} from './utils.js';
 
 
 const CARD_COUNT = 5;
@@ -49,8 +49,8 @@ let showingFilmsCount = CARD_COUNT;
 films
   .slice(0, showingFilmsCount)
   .forEach((film) => {
-  render(filmsListContainerElement, createFilmCardTemplate(film))
-});
+    render(filmsListContainerElement, createFilmCardTemplate(film));
+  });
 render(filmsListContainerElement, createButtonShowMoreTemplate(), `afterend`);
 
 const showMoreButton = filmsElement.querySelector(`.films-list__show-more`);
