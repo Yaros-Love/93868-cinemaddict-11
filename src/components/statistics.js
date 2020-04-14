@@ -1,5 +1,10 @@
-export const createFooterStatTemplate = () => {
+const createFooterStatTemplate = (moviesCount) => {
+  let numberFormat = new Intl.NumberFormat(`ru`);
+  numberFormat = numberFormat.format(moviesCount);
+
   return (
-    `<p>130 291 movies inside</p>`
+    `<p>${numberFormat} movies inside</p>`
   );
 };
+
+export {createFooterStatTemplate};
