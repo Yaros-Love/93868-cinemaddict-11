@@ -1,3 +1,5 @@
+import {createElement} from './../utils.js';
+
 const getRatingName = (number) => {
   let name = ``;
   switch (true) {
@@ -26,4 +28,25 @@ const createProfileTemplate = (ratingNumber) => {
   );
 };
 
-export {createProfileTemplate};
+export default class Profile {
+  constructor(rating) {
+    this._rating = rating;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createProfileTemplate(this._rating);
+  }
+
+  getElement() {
+    if (!this._element) {
+      return createElement(this.getTemplate());
+    }
+
+    return createElement(this.getTemplate());
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

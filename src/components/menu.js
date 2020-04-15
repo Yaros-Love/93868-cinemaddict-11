@@ -1,3 +1,5 @@
+import {createElement} from './../utils.js';
+
 const createFilterMarkup = (filter, isActive) => {
   const isFilterAll = !!(filter.name === `all`);
   return (`
@@ -20,4 +22,25 @@ const createMenuTemplate = (filters) => {
   );
 };
 
-export {createMenuTemplate};
+export default class Menu {
+  constructor(filters) {
+    this._filters = filters;
+    this.element = null;
+  }
+
+  getTemplate() {
+    return createMenuTemplate(this._filters);
+  }
+
+  getElement() {
+    if (!this._element) {
+      return createElement(this.getTemplate());
+    }
+
+    return createElement(this.getTemplate());
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
