@@ -15,10 +15,10 @@ export default class Films {
 
   getElement() {
     if (!this._element) {
-      return createElement(this.getTemplate());
+      this._element = createElement(this.getTemplate());
     }
 
-    return createElement(this.getTemplate());
+    return this._element;
   }
 
   removeElement() {

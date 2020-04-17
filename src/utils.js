@@ -68,8 +68,11 @@ const render = (container, element, place = `beforeend`) => {
     case RenderPosition.BEFOREEND:
       container.append(element);
       break;
+    case RenderPosition.AFTEREND:
+      container.after(element);
+      break;
   }
 };
 
 
-export {getRandomIntegerNumber, getRandomArrayItem, getRandomArray, getDate, createElement, render};
+export {getRandomIntegerNumber, getRandomArrayItem, getRandomArray, getDate, createElement, render, RenderPosition};
