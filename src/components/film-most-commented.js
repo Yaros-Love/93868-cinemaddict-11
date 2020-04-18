@@ -1,12 +1,6 @@
 import {createElement} from '../utils.js';
+import {createFilmMostCommentedContainerTemplate} from '../templates/film-most-commented.js';
 
-const createFilmMostCommentedContainerTemplate = () => {
-  return (`<section class="films-list--extra">
-      <h2 class="films-list__title">Most commented</h2>
-      <div class="films-list__container">
-      </div>
-    </section>`);
-};
 
 export default class FilmMostCommented {
   constructor() {

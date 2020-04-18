@@ -1,14 +1,13 @@
 import {createElement} from './../utils.js';
-import {createFilmsTemplate} from './../templates/films.js';
+import {createNoFilmsTemplate} from './../templates/no-films.js';
 
-
-export default class Films {
+export default class ButtonShowMore {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createFilmsTemplate();
+    return createNoFilmsTemplate();
   }
 
   getElement() {
@@ -23,3 +22,5 @@ export default class Films {
     this._element = null;
   }
 }
+
+
