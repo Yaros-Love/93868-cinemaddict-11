@@ -11,7 +11,4 @@ export default class Profile extends AbstructComponent {
   getTemplate() {
     return createProfileTemplate(this._rating);
   }
-
-  getElement() {
-  }
 }

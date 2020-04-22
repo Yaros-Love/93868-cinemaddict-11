@@ -1,4 +1,4 @@
-import {getRandomIntegerNumber} from '../utils';
+import {getRandomIntegerNumber} from '../utils/common';
 import {ALL_FILMS_COUNT} from '.././const.js';
 
 const filterNames = [`All movies`, `Watchlist`, `History`, `Favorites`];
