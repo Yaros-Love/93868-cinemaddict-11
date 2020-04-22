@@ -1,25 +1,9 @@
-import {createElement} from './../utils.js';
 import {createNoFilmsTemplate} from './../templates/no-films.js';
+import AbstructComponent from './abstract-component.js';
 
-export default class ButtonShowMore {
-  constructor() {
-    this._element = null;
-  }
-
+export default class ButtonShowMore extends AbstructComponent {
   getTemplate() {
     return createNoFilmsTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 
