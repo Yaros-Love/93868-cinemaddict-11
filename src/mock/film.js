@@ -1,5 +1,5 @@
 import {DefaultSentences, DefaultNames, Countries} from '../const.js';
-import {getRandomArrayItem, getRandomIntegerNumber, getRandomArray, getDate} from '../utils.js';
+import {getRandomArrayItem, getRandomIntegerNumber, getRandomArray, getDate} from '../utils/common.js';
 import {generateComments} from './comment.js';
 
 

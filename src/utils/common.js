@@ -1,10 +1,3 @@
-const RenderPosition = {
-  AFTERBEGIN: `afterbegin`,
-  BEFOREEND: `beforeend`,
-  AFTEREND: `afterend`
-};
-
-
 const getRandomArrayItem = (array) => {
   const randomIndex = getRandomIntegerNumber(0, array.length);
 
@@ -53,26 +46,5 @@ const getDate = () => {
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 };
 
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
 
-  return newElement.firstChild;
-};
-
-const render = (container, element, place = `beforeend`) => {
-  switch (place) {
-    case RenderPosition.AFTERBEGIN:
-      container.prepend(element);
-      break;
-    case RenderPosition.BEFOREEND:
-      container.append(element);
-      break;
-    case RenderPosition.AFTEREND:
-      container.after(element);
-      break;
-  }
-};
-
-
-export {getRandomIntegerNumber, getRandomArrayItem, getRandomArray, getDate, createElement, render, RenderPosition};
+export {getRandomIntegerNumber, getRandomArrayItem, getRandomArray, getDate};
