@@ -17,6 +17,8 @@ export default class MovieController {
     this._filmDetailsComponent = null;
 
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
+    this._openFilmPopup = this._openFilmPopup.bind(this);
+    this._closeFilmPopup = this._closeFilmPopup.bind(this);
   }
 
   render(film) {

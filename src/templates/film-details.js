@@ -46,14 +46,21 @@ const createDetailsTableMarkup = (film) => {
   }).join(`\n`);
 };
 
-const createControlsMarkup = () => {
-  const controls = Object.keys(Object.fromEntries(filmControls));
-  return controls.map((control) => {
-    return (
-      `<input type="checkbox" class="film-details__control-input visually-hidden" id="${control}" name="${control}">
+// const createControlsMarkup = (isActive = false) => {
+//   const controls = Object.keys(Object.fromEntries(filmControls));
+//   return controls.map((control) => {
+//     return (
+//       `<input type="checkbox" checked=${isActive} class="film-details__control-input visually-hidden" id="${control}" name="${control}">
+//       <label for="${control}" class="film-details__control-label film-details__control-label--${control}">${filmControls.get(control)}</label>`
+//     );
+//   }).join(`\n`);
+// };
+
+const createControlsMarkup = (control, isActive = false) => {
+  return (
+    `<input type="checkbox" ${isActive ? `checked` : ``} class="film-details__control-input visually-hidden" id="${control}" name="${control}">
       <label for="${control}" class="film-details__control-label film-details__control-label--${control}">${filmControls.get(control)}</label>`
-    );
-  }).join(`\n`);
+  );
 };
 
 const createCommentsMarkup = (comments) => {
@@ -80,7 +87,9 @@ const createFilmDetailsTemplate = (film) => {
   const {poster, title, originalTitle, rating, ageRating, fullDescription, comments} = film;
 
   const tableMarkup = createDetailsTableMarkup(film);
-  const filmControlsMarkup = createControlsMarkup();
+  const watchListControl = createControlsMarkup(`watchlist`, film.isInWatchList);
+  const watchedControl = createControlsMarkup(`watched`, film.isInWatched);
+  const favoriteControl = createControlsMarkup(`favorite`, film.isInFavorite);
   const commentsMarkup = createCommentsMarkup(comments);
 
   return (
@@ -120,7 +129,9 @@ const createFilmDetailsTemplate = (film) => {
           </div>
 
           <section class="film-details__controls">
-            ${filmControlsMarkup}
+            ${watchListControl}
+            ${watchedControl}
+            ${favoriteControl}
           </section>
         </div>
 
