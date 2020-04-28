@@ -1,8 +1,8 @@
 import {createElement} from '../utils/render.js';
 
-export default class AbstructComponent {
+export default class AbstractComponent {
   constructor() {
-    if (new.target === AbstructComponent) {
+    if (new.target === AbstractComponent) {
       throw new Error(`Can't initiate AbstractComponent, only concrete one.`);
     }
     this._element = null;

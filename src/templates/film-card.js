@@ -1,4 +1,4 @@
-const classNameForButton = new Map ([
+const classNameForButton = new Map([
   [`watchlist`, `add-to-watchlist`],
   [`watched`, `mark-as-watched `],
   [`favorite`, `favorite`],

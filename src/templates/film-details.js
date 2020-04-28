@@ -1,3 +1,5 @@
+import FilmCommentComponent from '../components/film-details-comment';
+
 const tableTerms = new Map([
   [`Director`, `director`],
   [`Writers`, `scenarists`],
@@ -46,15 +48,6 @@ const createDetailsTableMarkup = (film) => {
   }).join(`\n`);
 };
 
-// const createControlsMarkup = (isActive = false) => {
-//   const controls = Object.keys(Object.fromEntries(filmControls));
-//   return controls.map((control) => {
-//     return (
-//       `<input type="checkbox" checked=${isActive} class="film-details__control-input visually-hidden" id="${control}" name="${control}">
-//       <label for="${control}" class="film-details__control-label film-details__control-label--${control}">${filmControls.get(control)}</label>`
-//     );
-//   }).join(`\n`);
-// };
 
 const createControlsMarkup = (control, isActive = false) => {
   return (
@@ -63,34 +56,14 @@ const createControlsMarkup = (control, isActive = false) => {
   );
 };
 
-const createCommentsMarkup = (comments) => {
-  return comments.map((comment) => {
-    return (`
-      <li class="film-details__comment">
-        <span class="film-details__comment-emoji">
-          <img src="./images/emoji/${comment.emotion}.png" width="55" height="55" alt="emoji-${comment.emotion}">
-        </span>
-        <div>
-          <p class="film-details__comment-text">${comment.text}</p>
-          <p class="film-details__comment-info">
-            <span class="film-details__comment-author">${comment.author}</span>
-            <span class="film-details__comment-day">${comment.date}</span>
-            <button class="film-details__comment-delete">Delete</button>
-          </p>
-        </div>
-      </li>
-    `);
-  }).join(`\n`);
-};
-
-const createFilmDetailsTemplate = (film) => {
+const createFilmDetailsTemplate = (film, emoji) => {
   const {poster, title, originalTitle, rating, ageRating, fullDescription, comments} = film;
 
   const tableMarkup = createDetailsTableMarkup(film);
   const watchListControl = createControlsMarkup(`watchlist`, film.isInWatchList);
   const watchedControl = createControlsMarkup(`watched`, film.isInWatched);
   const favoriteControl = createControlsMarkup(`favorite`, film.isInFavorite);
-  const commentsMarkup = createCommentsMarkup(comments);
+  const commentsMarkup = comments.map((comment) => new FilmCommentComponent(comment).getTemplate()).join(`\n`);
 
   return (
     `<section class="film-details">
@@ -144,7 +117,9 @@ const createFilmDetailsTemplate = (film) => {
             </ul>
 
             <div class="film-details__new-comment">
-              <div for="add-emoji" class="film-details__add-emoji-label"></div>
+              <div for="add-emoji" class="film-details__add-emoji-label">
+              ${emoji ? `<img src="./images/emoji/${emoji}.png" width=55" height="55" alt="emoji">` : ``}
+              </div>
 
               <label class="film-details__comment-label">
                 <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>

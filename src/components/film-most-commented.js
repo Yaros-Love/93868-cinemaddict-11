@@ -1,8 +1,8 @@
 import {createFilmMostCommentedContainerTemplate} from '../templates/film-most-commented.js';
-import AbstructComponent from './abstract-component.js';
+import AbstractComponent from './abstract-component.js';
 
 
-export default class FilmMostCommented extends AbstructComponent {
+export default class FilmMostCommented extends AbstractComponent {
   getTemplate() {
     return createFilmMostCommentedContainerTemplate();
   }
