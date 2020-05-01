@@ -1,7 +1,7 @@
 import {createNoFilmsTemplate} from './../templates/no-films.js';
-import AbstructComponent from './abstract-component.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class ButtonShowMore extends AbstructComponent {
+export default class ButtonShowMore extends AbstractComponent {
   getTemplate() {
     return createNoFilmsTemplate();
   }

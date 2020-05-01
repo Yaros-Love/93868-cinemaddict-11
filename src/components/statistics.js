@@ -1,7 +1,7 @@
 import {createFooterStatTemplate} from '../templates/statistics.js';
-import AbstructComponent from './abstract-component.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class Statistics extends AbstructComponent {
+export default class Statistics extends AbstractComponent {
   constructor(amount) {
     super();
     this._amount = amount;

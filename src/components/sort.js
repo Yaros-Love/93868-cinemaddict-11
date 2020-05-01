@@ -1,7 +1,7 @@
 import {createSortTemplate, SortType} from '../templates/sort.js';
-import AbstructComponent from './abstract-component.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class Sort extends AbstructComponent {
+export default class Sort extends AbstractComponent {
   constructor() {
     super();
     this._currentSortType = SortType.DEFAULT;

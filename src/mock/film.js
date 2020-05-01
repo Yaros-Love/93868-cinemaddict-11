@@ -60,6 +60,9 @@ const generateFilm = () => {
     country: getRandomArrayItem(Countries),
     fullDescription: getRandomArray(DefaultSentences, getRandomIntegerNumber(20, 35)).join(` `),
     ageRating: getRandomIntegerNumber(6, 19),
+    isInWatchList: Math.random() > 0.5,
+    isInFavorite: Math.random() > 0.5,
+    isInWatched: Math.random() > 0.5,
   };
 };
 

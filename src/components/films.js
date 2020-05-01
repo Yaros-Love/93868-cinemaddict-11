@@ -1,8 +1,8 @@
 import {createFilmsTemplate} from './../templates/films.js';
-import AbstructComponent from './abstract-component.js';
+import AbstractComponent from './abstract-component.js';
 
 
-export default class Films extends AbstructComponent {
+export default class Films extends AbstractComponent {
   getTemplate() {
     return createFilmsTemplate();
   }
