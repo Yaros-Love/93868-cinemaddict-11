@@ -1,6 +1,7 @@
 import {DefaultSentences, DefaultNames, Countries} from '../const.js';
-import {getRandomArrayItem, getRandomIntegerNumber, getRandomArray, getDate} from '../utils/common.js';
+import {getRandomArrayItem, getRandomIntegerNumber, getRandomArray, formatDate, getRandomDate} from '../utils/common.js';
 import {generateComments} from './comment.js';
+import moment from 'moment';
 
 
 const FilmsTitles = [
@@ -32,14 +33,11 @@ const Genres = [
 ];
 
 const getFilmDuration = (minutes) => {
-  if (minutes > 60) {
-    const hours = Math.trunc(minutes / 60);
-    minutes = Math.floor((((minutes / 60 - hours) * 60) / 100) * 100);
+  const duration = moment.duration(minutes, `minutes`);
+  const durationHours = duration.hours();
+  const durationMinutes = duration.minutes();
 
-    return `${hours}h ${minutes}min`;
-  } else {
-    return `${minutes}min`;
-  }
+  return `${durationHours}h ${durationMinutes}m`;
 };
 
 const generateFilm = () => {
@@ -56,7 +54,7 @@ const generateFilm = () => {
     director: getRandomArrayItem(DefaultNames),
     scenarists: getRandomArray(DefaultNames).join(`, `),
     cast: getRandomArray(DefaultNames).join(`, `),
-    releaseDate: getDate(),
+    releaseDate: formatDate(getRandomDate()),
     country: getRandomArrayItem(Countries),
     fullDescription: getRandomArray(DefaultSentences, getRandomIntegerNumber(20, 35)).join(` `),
     ageRating: getRandomIntegerNumber(6, 19),

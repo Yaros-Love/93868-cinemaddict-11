@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const getRandomArrayItem = (array) => {
   const randomIndex = getRandomIntegerNumber(0, array.length);
 
@@ -30,21 +32,13 @@ const getRandomDate = () => {
   return targetDate;
 };
 
-const castTimeFormat = (value) => {
-  return value < 10 ? `0${value}` : String(value);
+
+const formatDate = (date) => {
+  return moment(date).format(`DD MMMM YYYY`);
 };
 
-
-const getDate = () => {
-  const targetDate = Math.random() > 0.5 ? new Date() : getRandomDate();
-  const year = targetDate.getFullYear();
-  let month = castTimeFormat(targetDate.getMonth() + 1);
-  let day = castTimeFormat(targetDate.getDate());
-  let hours = castTimeFormat(targetDate.getHours());
-  let minutes = castTimeFormat(targetDate.getMinutes());
-
-  return `${year}/${month}/${day} ${hours}:${minutes}`;
+const formatCommentDate = (date) => {
+  return moment(date).format(`YYYY/MM/DD hh:mm`);
 };
 
-
-export {getRandomIntegerNumber, getRandomArrayItem, getRandomArray, getDate};
+export {getRandomIntegerNumber, getRandomArrayItem, getRandomArray, formatDate, getRandomDate, formatCommentDate};

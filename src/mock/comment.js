@@ -1,5 +1,5 @@
 import {DefaultSentences, DefaultNames} from '../const.js';
-import {getRandomArrayItem, getRandomArray, getDate} from '../utils/common.js';
+import {getRandomArrayItem, getRandomArray, formatCommentDate, getRandomDate} from '../utils/common.js';
 
 const Emotions = [`smile`, `sleeping`, `puke`, `angry`];
 const generateComment = () => {
@@ -7,7 +7,7 @@ const generateComment = () => {
     text: getRandomArray(DefaultSentences),
     emotion: getRandomArrayItem(Emotions),
     author: getRandomArrayItem(DefaultNames),
-    date: getDate(),
+    date: formatCommentDate(getRandomDate()),
   };
 };
 
