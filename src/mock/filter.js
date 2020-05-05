@@ -1,7 +1,7 @@
 import {getRandomIntegerNumber} from '../utils/common';
-import {ALL_FILMS_COUNT} from '.././const.js';
+import {ALL_FILMS_COUNT, FilterType} from '.././const.js';
 
-const filterNames = [`All movies`, `Watchlist`, `History`, `Favorites`];
+const filterNames = Object.values(FilterType);
 
 const getFilters = () => {
   return filterNames.map((filter) => {

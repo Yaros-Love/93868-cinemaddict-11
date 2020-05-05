@@ -41,4 +41,11 @@ const Countries = [
   `Tuvalu`
 ];
 
-export {DefaultSentences, DefaultNames, Countries, ALL_FILMS_COUNT};
+const FilterType = {
+  ALL: `All movies`,
+  WATCHLIST: `Watchlist`,
+  HISTORY: `History`,
+  FAVORITES: `Favorites`
+};
+
+export {DefaultSentences, DefaultNames, Countries, ALL_FILMS_COUNT, FilterType};

@@ -1,9 +1,9 @@
 import AbstractComponent from "./abstract-component";
 
 export default class FilmCommentComponent extends AbstractComponent {
-  constructor({text, emotion, author, date}) {
+  constructor({id, text, emotion, author, date}) {
     super();
-
+    this._id = id;
     this._emoji = emotion;
     this._text = text;
     this._author = author;
@@ -20,9 +20,11 @@ export default class FilmCommentComponent extends AbstractComponent {
           <p class="film-details__comment-info">
             <span class="film-details__comment-author">${this._author}</span>
             <span class="film-details__comment-day">${this._date}</span>
-            <button class="film-details__comment-delete">Delete</button>
+            <button class="film-details__comment-delete" data-comment-id="${this._id}">Delete</button>
           </p>
         </div>
       </li>`;
   }
+
+
 }

@@ -37,11 +37,16 @@ const getFilmDuration = (minutes) => {
   const durationHours = duration.hours();
   const durationMinutes = duration.minutes();
 
-  return `${durationHours}h ${durationMinutes}m`;
+  if (minutes < 60) {
+    return `${durationMinutes}m`;
+  } else {
+    return `${durationHours}h ${durationMinutes}m`;
+  }
 };
 
 const generateFilm = () => {
   return {
+    id: String(new Date() + Math.random()),
     title: getRandomArrayItem(FilmsTitles),
     originalTitle: getRandomArrayItem(FilmsTitles),
     poster: getRandomArrayItem(Posters),

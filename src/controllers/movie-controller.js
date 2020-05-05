@@ -1,6 +1,6 @@
 import FilmCardComponent from '../components/film-card.js';
 import FilmDetailsComponent from '../components/film-details.js';
-import {render, RenderPosition, replace} from '../utils/render.js';
+import {render, remove, RenderPosition, replace} from '../utils/render.js';
 
 const Mode = {
   DEFAULT: `default`,
@@ -75,6 +75,9 @@ export default class MovieController {
       }));
     });
 
+    this._filmDetailsComponent.setDeleteCommentClickHandler((index) => {
+      this._onDataChange(this, film.comments[index], null);
+    });
 
     if (oldFilmComponent && oldFilmDetailsComponent) {
       replace(this._filmComponent, oldFilmComponent);
@@ -82,6 +85,12 @@ export default class MovieController {
     } else {
       render(this._container, this._filmComponent);
     }
+  }
+
+  destroy() {
+    remove(this._filmComponent);
+    remove(this._filmDetailsComponent);
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 
   _openFilmPopup() {
