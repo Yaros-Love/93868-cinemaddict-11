@@ -7,6 +7,10 @@ const Mode = {
   OPEN: `open`,
 };
 
+const isCmdEnterKeysCode = (evt) => {
+  return evt.code === `Enter` && (evt.ctrlKey || evt.metaKey);
+};
+
 export default class MovieController {
   constructor(container, onDataChange, onViewChange) {
     this._film = null;
@@ -75,9 +79,31 @@ export default class MovieController {
       }));
     });
 
-    this._filmDetailsComponent.setDeleteCommentClickHandler((index) => {
-      this._onDataChange(this, film.comments[index], null);
+    this._filmDetailsComponent.setDeleteCommentClickHandler((evt) => {
+      evt.preventDefault();
+
+      const deleteButtonElement = evt.target;
+      const commentItem = deleteButtonElement.closest(`.film-details__comment`);
+      const removeCommentId = commentItem.dataset.commentId;
+
+      const comments = this._film.comments.filter((comment) => {
+        return comment.id !== removeCommentId;
+      });
+
+
+      this._onDataChange(this, this._film, Object.assign(this._film, {comments}));
     });
+
+    this._filmDetailsComponent.setAddNewCommentHandler((evt) => {
+     if (isCmdEnterKeysCode(evt)) {
+       const comment = this._filmDetailsComponent.getNewComment()
+       console.log(comment)
+       if (comment) {
+         const newComments = this._film.comments.concat(comment);
+         this._onDataChange(this, this._film, Object.assign(this._film, {comments: newComments}));
+       }
+      }
+    })
 
     if (oldFilmComponent && oldFilmDetailsComponent) {
       replace(this._filmComponent, oldFilmComponent);
@@ -120,5 +146,7 @@ export default class MovieController {
       this._closeFilmPopup();
     }
   }
-
+  getFilm() {
+    return this._filmComponent.getFilmData();
+  }
 }

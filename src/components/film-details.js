@@ -1,17 +1,21 @@
-import {createFilmDetailsTemplate} from './../templates/film-details.js';
+import {createFilmDetailsTemplate} from '../templates/film-details';
 import AbstractSmartComponent from './abstract-smart-component.js';
+import {encode} from 'he';
+import moment from 'moment';
+import {formatCommentDate} from "../utils/common";
 
 export default class FilmDetails extends AbstractSmartComponent {
   constructor(film) {
     super();
     this._film = film;
-    this._comments = film.comments;
 
     this._addWatchListHandler = null;
     this._markAsWatchedHandler = null;
     this._favoriteHandler = null;
     this._closeEscButtonHandler = null;
-    this._deleteButtonHandler = null;
+    this._deleteButtonClickHandler = null;
+    this._addNewCommentHandler = null;
+
 
     this._commentEmoji = null;
     this._element = this.getElement();
@@ -25,7 +29,8 @@ export default class FilmDetails extends AbstractSmartComponent {
     this.setCardFavoriteClickHandler(this._favoriteHandler);
     this.setCloseButtonClickHandler(this._closeEscButtonHandler);
     this._setEmojiClickHandler();
-    this.setDeleteCommentClickHandler(this._deleteButtonHandler);
+    this.setDeleteCommentClickHandler(this._deleteButtonClickHandler);
+    this.setAddNewCommentHandler(this._addNewCommentHandler);
   }
   getTemplate() {
     return createFilmDetailsTemplate(this._film, this._commentEmoji);
@@ -53,29 +58,20 @@ export default class FilmDetails extends AbstractSmartComponent {
   }
 
   setDeleteCommentClickHandler(handler) {
-    const commentList = this._element.querySelectorAll(`.film-details__comment`);
+    const commentButtonList = this._element.querySelectorAll(`.film-details__comment-delete`);
 
-    commentList.forEach((comment) => {
-      comment.addEventListener(`click`, (evt) => {
-        evt.preventDefault();
+    if(commentButtonList) {
+      Array.from(commentButtonList).forEach((button) => button.addEventListener(`click`, handler));
+    }
 
-        if (evt.target.tagName !== `BUTTON`) {
-          return;
-        }
+    this._deleteButtonClickHandler = handler;
+  }
 
-        // this._updatedComments = this._comments.filter((item) => item.id !== evt.target.dataset.commentId);
+  setAddNewCommentHandler(handler) {
+    const textCommentElement = this._element.querySelector(`.film-details__comment-input`);
+    textCommentElement.addEventListener(`keydown`, handler);
 
-        // this._film.comments = this._updatedComments;
-
-        const index = this._comments.findIndex((it) => it.id === evt.target.dataset.commentId);
-        console.log(index);
-
-
-        this._deleteButtonHandler = handler;
-
-        handler(index);
-      });
-    });
+    this._addNewCommentHandler = handler;
   }
 
   _setEmojiClickHandler() {
@@ -93,7 +89,29 @@ export default class FilmDetails extends AbstractSmartComponent {
         this.rerender();
       }
     });
+  }
 
+  getNewComment() {
+    const textCommentElement = this._element.querySelector(`.film-details__comment-input`);
+
+    const text = encode(textCommentElement.value);
+    const emotion = this._commentEmoji;
+    const author = `Tester`;
+
+    if (!emotion || !text) {
+      return null;
+    }
+
+    const id = Math.floor(Math.random() * Date.now()) + ``;
+    const date = formatCommentDate(new Date());
+
+    return {
+      id,
+      text,
+      emotion,
+      author,
+      date,
+    };
   }
 }
 

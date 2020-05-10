@@ -48,7 +48,10 @@ export default class PageController {
   constructor(container, moviesModel) {
     this._container = container;
     this._moviesModel = moviesModel;
+
     this._showedFilmControllers = [];
+    this._showedCommentsFilmControllers = [];
+
     this._showingCardCount = CARD_COUNT;
     this._currentSortType = SortType.DEFAULT;
     this._sortComponent = new SortComponent(this._currentSortType)
@@ -186,10 +189,13 @@ export default class PageController {
     this._showingCardCount = CARD_COUNT;
 
     const sortedFilms = getSortedFilms(this._moviesModel.getFilms(), sortType, 0, this._showingCardCount);
+    const sortedTopRated = getSortedFilms(this._moviesModel.getTopRatedFilms(), sortType, 0, this._showingCardCount);
+    const sortedMostCommented = getSortedFilms(this._moviesModel.getMostCommentedFilms(), sortType, 0, this._showingCardCount);
 
     this._removeFilms();
     this._renderFilms(sortedFilms);
-    this._renderExtraFilms(sortedFilms);
+    this._renderMostCommentedFilms(sortedMostCommented);
+    this._renderTopRatedFilms(sortedTopRated)
 
     this._renderShowMoreButton();
   }
@@ -201,25 +207,21 @@ export default class PageController {
   _updateFilms(count) {
     this._removeFilms();
     this._renderFilms(this._moviesModel.getFilms().slice(0, count));
-    this._renderExtraFilms(this._moviesModel.getFilms().slice(0, EXTRA_CARD_COUNT));
+    this._renderMostCommentedFilms(this._moviesModel.getMostCommentedFilms().slice(0, EXTRA_CARD_COUNT));
+    this._renderTopRatedFilms(this._moviesModel.getTopRatedFilms().slice(0, EXTRA_CARD_COUNT));
+
     this._renderShowMoreButton();
   }
 
   _onDataChange(filmController, oldData, newData) {
     console.log(filmController, oldData, newData);
 
-    // const isSuccess = this._moviesModel.updateFilms(oldData.id, newData);
+    const isSuccess = this._moviesModel.updateFilms(oldData.id, newData);
 
-    // if (isSuccess) {
-    //   filmController.render(newData);
-    //   this._renderMostCommentedFilms(this._moviesModel.getMostCommentedFilms());
-    // }
-    if (newData === null) {
-      console.log(`new data null`);
-      this._moviesModel.updateFilms(oldData.comments.id, newData);
-    //   filmController.destroy();
-    //   this._moviesModel.getFilms();
-    //   this._updateFilms(this._showingCardCount);
+    if (isSuccess) {
+      const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedCommentsFilmControllers);
+      const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
+      showedFilmControllers.forEach((controller) => controller.render(newData));
     }
   }
 

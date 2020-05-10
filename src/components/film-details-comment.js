@@ -11,7 +11,7 @@ export default class FilmCommentComponent extends AbstractComponent {
   }
 
   getTemplate() {
-    return ` <li class="film-details__comment">
+    return ` <li class="film-details__comment" data-comment-id="${this._id}">
         <span class="film-details__comment-emoji">
           <img src="./images/emoji/${this._emoji}.png" width="55" height="55" alt="emoji-${this._emoji}">
         </span>
