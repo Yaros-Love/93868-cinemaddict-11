@@ -12,8 +12,6 @@ const createFilterMarkup = (filter, isActive) => {
 const createMenuTemplate = (filters) => {
   const filterMarkup = filters.map((item) => createFilterMarkup(item, item.isActive)).join(`\n`);
 
-  console.log(filters);
-
   return (
     `<nav class="main-navigation">
     <div class="main-navigation__items">

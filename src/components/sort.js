@@ -1,4 +1,4 @@
-import {createSortTemplate, SortType} from '../templates/sort.js';
+import {createSortTemplate} from '../templates/sort.js';
 import AbstractComponent from './abstract-component.js';
 
 export default class Sort extends AbstractComponent {
@@ -15,8 +15,6 @@ export default class Sort extends AbstractComponent {
   }
 
   setSortTypeChangeHandler(handler) {
-    console.log(`click`);
-
     this.getElement().addEventListener(`click`, (evt) => {
       evt.preventDefault();
 

@@ -1,7 +1,6 @@
 import {createFilmDetailsTemplate} from '../templates/film-details';
 import AbstractSmartComponent from './abstract-smart-component.js';
 import {encode} from 'he';
-import moment from 'moment';
 import {formatCommentDate} from "../utils/common";
 
 export default class FilmDetails extends AbstractSmartComponent {
@@ -60,7 +59,7 @@ export default class FilmDetails extends AbstractSmartComponent {
   setDeleteCommentClickHandler(handler) {
     const commentButtonList = this._element.querySelectorAll(`.film-details__comment-delete`);
 
-    if(commentButtonList) {
+    if (commentButtonList) {
       Array.from(commentButtonList).forEach((button) => button.addEventListener(`click`, handler));
     }
 

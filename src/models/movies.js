@@ -1,5 +1,5 @@
-import { getFilmsByFilter } from '../utils/filter.js';
-import { FilterType } from '../const.js';
+import {getFilmsByFilter} from '../utils/filter.js';
+import {FilterType} from '../const.js';
 
 const getTopRatedFilms = (films) => {
   return films.sort((a, b) => b.rating - a.rating);

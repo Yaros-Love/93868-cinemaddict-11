@@ -12,11 +12,12 @@ const isCmdEnterKeysCode = (evt) => {
 };
 
 export default class MovieController {
-  constructor(container, onDataChange, onViewChange) {
+  constructor(container, onDataChange, onViewChange, updateMostCommentedFilms) {
     this._film = null;
     this._container = container;
     this._onDataChange = onDataChange;
     this._onViewChange = onViewChange;
+    this._updateMostCommented = updateMostCommentedFilms;
     this._mode = Mode.DEFAULT;
     this._filmComponent = null;
     this._filmDetailsComponent = null;
@@ -95,15 +96,15 @@ export default class MovieController {
     });
 
     this._filmDetailsComponent.setAddNewCommentHandler((evt) => {
-     if (isCmdEnterKeysCode(evt)) {
-       const comment = this._filmDetailsComponent.getNewComment()
-       console.log(comment)
-       if (comment) {
-         const newComments = this._film.comments.concat(comment);
-         this._onDataChange(this, this._film, Object.assign(this._film, {comments: newComments}));
-       }
+      if (isCmdEnterKeysCode(evt)) {
+        const comment = this._filmDetailsComponent.getNewComment();
+
+        if (comment) {
+          const newComments = this._film.comments.concat(comment);
+          this._onDataChange(this, this._film, Object.assign(this._film, {comments: newComments}));
+        }
       }
-    })
+    });
 
     if (oldFilmComponent && oldFilmDetailsComponent) {
       replace(this._filmComponent, oldFilmComponent);
@@ -130,6 +131,7 @@ export default class MovieController {
   _closeFilmPopup() {
     document.querySelector(`body`).removeChild(this._filmDetailsComponent.getElement());
     document.removeEventListener(`keydown`, this._onEscKeyDown);
+    this._updateMostCommented();
     this._mode = Mode.DEFAULT;
   }
 

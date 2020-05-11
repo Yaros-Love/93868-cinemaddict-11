@@ -18,7 +18,6 @@ export default class Filter extends AbstractComponent {
       if (evt.target.tagName !== `A`) {
         return;
       }
-      console.log(evt.target.id);
 
       const filterName = evt.target.id;
       handler(filterName);
