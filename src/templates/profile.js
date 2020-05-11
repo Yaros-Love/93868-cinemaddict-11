@@ -1,19 +1,4 @@
-const getRatingName = (number) => {
-  let name = ``;
-  switch (true) {
-    case (number <= 10):
-      name = `Novice`;
-      break;
-    case (number >= 11 && number <= 20):
-      name = `Fan`;
-      break;
-    case (number >= 21):
-      name = `Movie Buff`;
-      break;
-    default: name = ``;
-  }
-  return name;
-};
+import {getRatingName} from '../const.js';
 
 const createProfileTemplate = (ratingNumber) => {
   const ratingName = getRatingName(ratingNumber);

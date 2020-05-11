@@ -40,7 +40,7 @@ export default class MovieController {
 
     this._filmComponent.setCardAddToWatchListClickHandler((evt) => {
       evt.preventDefault();
-      this._onDataChange(this, this._film, Object.assign({}, this._film, {
+      this._onDataChange(this, film, Object.assign({}, film, {
         isInWatchList: !film.isInWatchList,
       }));
     });
@@ -61,7 +61,7 @@ export default class MovieController {
 
     this._filmDetailsComponent.setCardAddToWatchListClickHandler((evt) => {
       evt.preventDefault();
-      this._onDataChange(this, this._film, Object.assign({}, this._film, {
+      this._onDataChange(this, film, Object.assign({}, film, {
         isInWatchList: !film.isInWatchList,
       }));
     });

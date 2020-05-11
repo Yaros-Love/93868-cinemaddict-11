@@ -1,4 +1,4 @@
-import {createProfileTemplate} from './../templates/profile.js';
+import {createProfileTemplate} from "./../templates/profile.js";
 import AbstractComponent from './abstract-component.js';
 
 

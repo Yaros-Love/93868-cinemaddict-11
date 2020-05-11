@@ -1,8 +1,8 @@
 import {DefaultSentences, DefaultNames, Countries} from '../const.js';
-import {getRandomArrayItem, getRandomIntegerNumber, getRandomArray, formatDate, getRandomDate} from '../utils/common.js';
+import {getFilmDuration, getRandomArrayItem, getRandomIntegerNumber, getRandomArray, formatDate, getRandomDate} from '../utils/common.js';
 import {generateComments} from './comment.js';
-import moment from 'moment';
 
+const profileRating = getRandomIntegerNumber(0, 35);
 
 const FilmsTitles = [
   `Made for Each Other`,
@@ -32,17 +32,7 @@ const Genres = [
   `Triller`
 ];
 
-const getFilmDuration = (minutes) => {
-  const duration = moment.duration(minutes, `minutes`);
-  const durationHours = duration.hours();
-  const durationMinutes = duration.minutes();
 
-  if (minutes < 60) {
-    return `${durationMinutes}m`;
-  } else {
-    return `${durationHours}h ${durationMinutes}m`;
-  }
-};
 
 const generateFilm = () => {
   return {
@@ -63,9 +53,13 @@ const generateFilm = () => {
     country: getRandomArrayItem(Countries),
     fullDescription: getRandomArray(DefaultSentences, getRandomIntegerNumber(20, 35)).join(` `),
     ageRating: getRandomIntegerNumber(6, 19),
-    isInWatchList: Math.random() > 0.5,
-    isInFavorite: Math.random() > 0.5,
-    isInWatched: Math.random() > 0.5,
+
+    userDetails: {
+      isInWatchList: Math.random() > 0.5,
+      isInFavorite: Math.random() > 0.5,
+      isInWatched: Math.random() > 0.5,
+      watchingDate: getRandomDate(),
+    }
   };
 };
 
@@ -75,4 +69,4 @@ const generateFilms = (count) => {
     .map(generateFilm);
 };
 
-export {generateFilms};
+export {generateFilms, profileRating};

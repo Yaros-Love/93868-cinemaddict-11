@@ -41,6 +41,23 @@ const Countries = [
   `Tuvalu`
 ];
 
+const getRatingName = (number) => {
+  let name = ``;
+  switch (true) {
+    case (number <= 10):
+      name = `Novice`;
+      break;
+    case (number >= 11 && number <= 20):
+      name = `Fan`;
+      break;
+    case (number >= 21):
+      name = `Movie Buff`;
+      break;
+    default: name = ``;
+  }
+  return name;
+};
+
 const FilterType = {
   ALL: `All movies`,
   WATCHLIST: `Watchlist`,
@@ -48,4 +65,12 @@ const FilterType = {
   FAVORITES: `Favorites`
 };
 
-export {DefaultSentences, DefaultNames, Countries, ALL_FILMS_COUNT, FilterType};
+const FilterStatType = {
+  ALL: `All time`,
+  TODAY: `Today`,
+  WEEK: `Week`,
+  MONTH: `Month`,
+  YEAR: `Year`
+};
+
+export {DefaultSentences, DefaultNames, Countries, ALL_FILMS_COUNT, FilterType, getRatingName};

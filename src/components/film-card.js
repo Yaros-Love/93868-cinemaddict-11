@@ -1,4 +1,4 @@
-import {createFilmCardTemplate} from './../templates/film-card.js';
+import {createFilmCardTemplate} from '../templates/film-card';
 import AbstractComponent from './abstract-component.js';
 
 export default class FilmCard extends AbstractComponent {
