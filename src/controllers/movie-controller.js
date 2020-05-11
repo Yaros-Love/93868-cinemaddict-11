@@ -1,18 +1,23 @@
 import FilmCardComponent from '../components/film-card.js';
 import FilmDetailsComponent from '../components/film-details.js';
-import {render, RenderPosition, replace} from '../utils/render.js';
+import {render, remove, RenderPosition, replace} from '../utils/render.js';
 
 const Mode = {
   DEFAULT: `default`,
   OPEN: `open`,
 };
 
+const isCmdEnterKeysCode = (evt) => {
+  return evt.code === `Enter` && (evt.ctrlKey || evt.metaKey);
+};
+
 export default class MovieController {
-  constructor(container, onDataChange, onViewChange) {
+  constructor(container, onDataChange, onViewChange, updateMostCommentedFilms) {
     this._film = null;
     this._container = container;
     this._onDataChange = onDataChange;
     this._onViewChange = onViewChange;
+    this._updateMostCommented = updateMostCommentedFilms;
     this._mode = Mode.DEFAULT;
     this._filmComponent = null;
     this._filmDetailsComponent = null;
@@ -75,6 +80,31 @@ export default class MovieController {
       }));
     });
 
+    this._filmDetailsComponent.setDeleteCommentClickHandler((evt) => {
+      evt.preventDefault();
+
+      const deleteButtonElement = evt.target;
+      const commentItem = deleteButtonElement.closest(`.film-details__comment`);
+      const removeCommentId = commentItem.dataset.commentId;
+
+      const comments = this._film.comments.filter((comment) => {
+        return comment.id !== removeCommentId;
+      });
+
+
+      this._onDataChange(this, this._film, Object.assign(this._film, {comments}));
+    });
+
+    this._filmDetailsComponent.setAddNewCommentHandler((evt) => {
+      if (isCmdEnterKeysCode(evt)) {
+        const comment = this._filmDetailsComponent.getNewComment();
+
+        if (comment) {
+          const newComments = this._film.comments.concat(comment);
+          this._onDataChange(this, this._film, Object.assign(this._film, {comments: newComments}));
+        }
+      }
+    });
 
     if (oldFilmComponent && oldFilmDetailsComponent) {
       replace(this._filmComponent, oldFilmComponent);
@@ -82,6 +112,12 @@ export default class MovieController {
     } else {
       render(this._container, this._filmComponent);
     }
+  }
+
+  destroy() {
+    remove(this._filmComponent);
+    remove(this._filmDetailsComponent);
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 
   _openFilmPopup() {
@@ -95,6 +131,7 @@ export default class MovieController {
   _closeFilmPopup() {
     document.querySelector(`body`).removeChild(this._filmDetailsComponent.getElement());
     document.removeEventListener(`keydown`, this._onEscKeyDown);
+    this._updateMostCommented();
     this._mode = Mode.DEFAULT;
   }
 
@@ -111,5 +148,7 @@ export default class MovieController {
       this._closeFilmPopup();
     }
   }
-
+  getFilm() {
+    return this._filmComponent.getFilmData();
+  }
 }

@@ -5,6 +5,7 @@ import {generateFilms} from './mock/film.js';
 import {getRandomIntegerNumber} from './utils/common.js';
 import {render} from './utils/render.js';
 import PageController from './controllers/page-controller.js';
+import MoviesModel from './models/movies.js';
 
 
 const profileRating = getRandomIntegerNumber(0, 35);
@@ -13,7 +14,11 @@ render(headerElement, new ProfileComponent(profileRating));
 
 const mainElement = document.querySelector(`.main`);
 const films = generateFilms(ALL_FILMS_COUNT);
-const pageController = new PageController(mainElement);
+const moviesModel = new MoviesModel();
+moviesModel.setFilms(films);
+console.log(moviesModel.getFilms());
+
+const pageController = new PageController(mainElement, moviesModel);
 pageController.render(films);
 
 const footerElement = document.querySelector(`.footer`);

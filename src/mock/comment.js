@@ -4,6 +4,7 @@ import {getRandomArrayItem, getRandomArray, formatCommentDate, getRandomDate} fr
 const Emotions = [`smile`, `sleeping`, `puke`, `angry`];
 const generateComment = () => {
   return {
+    id: String(new Date() + Math.random()),
     text: getRandomArray(DefaultSentences),
     emotion: getRandomArrayItem(Emotions),
     author: getRandomArrayItem(DefaultNames),

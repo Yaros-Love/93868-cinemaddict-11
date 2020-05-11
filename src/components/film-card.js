@@ -26,4 +26,7 @@ export default class FilmCard extends AbstractComponent {
     this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, handler);
     this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, handler);
   }
+  getFilmData() {
+    return this._film;
+  }
 }

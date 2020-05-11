@@ -1,5 +1,7 @@
-import {createFilmDetailsTemplate} from './../templates/film-details.js';
+import {createFilmDetailsTemplate} from '../templates/film-details';
 import AbstractSmartComponent from './abstract-smart-component.js';
+import {encode} from 'he';
+import {formatCommentDate} from "../utils/common";
 
 export default class FilmDetails extends AbstractSmartComponent {
   constructor(film) {
@@ -10,6 +12,9 @@ export default class FilmDetails extends AbstractSmartComponent {
     this._markAsWatchedHandler = null;
     this._favoriteHandler = null;
     this._closeEscButtonHandler = null;
+    this._deleteButtonClickHandler = null;
+    this._addNewCommentHandler = null;
+
 
     this._commentEmoji = null;
     this._element = this.getElement();
@@ -23,6 +28,8 @@ export default class FilmDetails extends AbstractSmartComponent {
     this.setCardFavoriteClickHandler(this._favoriteHandler);
     this.setCloseButtonClickHandler(this._closeEscButtonHandler);
     this._setEmojiClickHandler();
+    this.setDeleteCommentClickHandler(this._deleteButtonClickHandler);
+    this.setAddNewCommentHandler(this._addNewCommentHandler);
   }
   getTemplate() {
     return createFilmDetailsTemplate(this._film, this._commentEmoji);
@@ -49,6 +56,23 @@ export default class FilmDetails extends AbstractSmartComponent {
     this._closeEscButtonHandler = handler;
   }
 
+  setDeleteCommentClickHandler(handler) {
+    const commentButtonList = this._element.querySelectorAll(`.film-details__comment-delete`);
+
+    if (commentButtonList) {
+      Array.from(commentButtonList).forEach((button) => button.addEventListener(`click`, handler));
+    }
+
+    this._deleteButtonClickHandler = handler;
+  }
+
+  setAddNewCommentHandler(handler) {
+    const textCommentElement = this._element.querySelector(`.film-details__comment-input`);
+    textCommentElement.addEventListener(`keydown`, handler);
+
+    this._addNewCommentHandler = handler;
+  }
+
   _setEmojiClickHandler() {
     const emojiList = this._element.querySelector(`.film-details__emoji-list`);
 
@@ -64,7 +88,29 @@ export default class FilmDetails extends AbstractSmartComponent {
         this.rerender();
       }
     });
+  }
 
+  getNewComment() {
+    const textCommentElement = this._element.querySelector(`.film-details__comment-input`);
+
+    const text = encode(textCommentElement.value);
+    const emotion = this._commentEmoji;
+    const author = `Tester`;
+
+    if (!emotion || !text) {
+      return null;
+    }
+
+    const id = Math.floor(Math.random() * Date.now()) + ``;
+    const date = formatCommentDate(new Date());
+
+    return {
+      id,
+      text,
+      emotion,
+      author,
+      date,
+    };
   }
 }
 
