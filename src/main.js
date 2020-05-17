@@ -1,3 +1,4 @@
+import API from './api.js';
 import ProfileComponent from './components/profile.js';
 import FooterStatComponent from './components/statistics.js';
 import {ALL_FILMS_COUNT} from './const.js';
@@ -7,13 +8,16 @@ import {render} from './utils/render.js';
 import PageController from './controllers/page-controller.js';
 import MoviesModel from './models/movies.js';
 
+const AUTHORIZATION = `Basic dXNldsgdfd29yZAo=`;
+const END_POINT = `https://11.ecmascript.pages.academy/cinemaddict`;
 
-const profileRating = getRandomIntegerNumber(0, 35);
+
+// const profileRating = getRandomIntegerNumber(0, 35);
 const headerElement = document.querySelector(`.header`);
 render(headerElement, new ProfileComponent(profileRating));
 
 const mainElement = document.querySelector(`.main`);
-const films = generateFilms(ALL_FILMS_COUNT);
+// const films = generateFilms(ALL_FILMS_COUNT);
 const moviesModel = new MoviesModel();
 moviesModel.setFilms(films);
 console.log(moviesModel.getFilms());
