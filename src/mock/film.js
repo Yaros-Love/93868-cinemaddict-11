@@ -1,7 +1,6 @@
 import {DefaultSentences, DefaultNames, Countries} from '../const.js';
 import {getRandomArrayItem, getRandomIntegerNumber, getRandomArray, formatDate, getRandomDate} from '../utils/common.js';
 import {generateComments} from './comment.js';
-import moment from 'moment';
 
 
 const FilmsTitles = [
@@ -32,18 +31,6 @@ const Genres = [
   `Triller`
 ];
 
-const getFilmDuration = (minutes) => {
-  const duration = moment.duration(minutes, `minutes`);
-  const durationHours = duration.hours();
-  const durationMinutes = duration.minutes();
-
-  if (minutes < 60) {
-    return `${durationMinutes}m`;
-  } else {
-    return `${durationHours}h ${durationMinutes}m`;
-  }
-};
-
 const generateFilm = () => {
   return {
     id: String(new Date() + Math.random()),
@@ -61,7 +48,7 @@ const generateFilm = () => {
     cast: getRandomArray(DefaultNames).join(`, `),
     releaseDate: formatDate(getRandomDate()),
     country: getRandomArrayItem(Countries),
-    fullDescription: getRandomArray(DefaultSentences, getRandomIntegerNumber(20, 35)).join(` `),
+    // fullDescription: getRandomArray(DefaultSentences, getRandomIntegerNumber(20, 35)).join(` `),
     ageRating: getRandomIntegerNumber(6, 19),
     isInWatchList: Math.random() > 0.5,
     isInFavorite: Math.random() > 0.5,

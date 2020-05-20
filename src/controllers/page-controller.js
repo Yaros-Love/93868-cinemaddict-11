@@ -44,9 +44,10 @@ const getSortedFilms = (films, sortType, from, to) => {
 };
 
 export default class PageController {
-  constructor(container, moviesModel) {
+  constructor(container, moviesModel, api) {
     this._container = container;
     this._moviesModel = moviesModel;
+    this._api = api;
 
     this._showedFilmControllers = [];
     this._showedTopRatedFilmControllers = [];
@@ -155,7 +156,9 @@ export default class PageController {
   }
 
   _removeFilms(controllers) {
+    console.log('controllers', controllers)
     controllers.forEach((filmController) => filmController.destroy());
+    console.log('controllers', controllers)
     controllers = [];
   }
 
@@ -219,7 +222,7 @@ export default class PageController {
     this._removeFilms(this._showedMostCommentedFilmControllers);
     remove(this._filmMostCommentedContainerComponent);
 
-    this._renderMostCommentedFilms(this._moviesModel.getMostCommentedFilms().slice(0, EXTRA_CARD_COUNT));
+    // this._renderMostCommentedFilms(this._moviesModel.getMostCommentedFilms().slice(0, EXTRA_CARD_COUNT));
   }
 
   _onDataChange(filmController, oldData, newData) {
@@ -240,5 +243,6 @@ export default class PageController {
     this._rerenderSortComponent(this._currentSortType);
 
     this._updateFilms(CARD_COUNT);
+    this._updateMostCommentedFilms();
   }
 }

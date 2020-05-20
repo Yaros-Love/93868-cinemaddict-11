@@ -1,4 +1,5 @@
 import FilmCommentComponent from '../components/film-details-comment';
+import {formatDate, getFilmDuration} from "../utils/common";
 
 const tableTerms = new Map([
   [`Director`, `director`],
@@ -57,9 +58,13 @@ const createControlsMarkup = (control, isActive = false) => {
 };
 
 const createFilmDetailsTemplate = (film, emoji) => {
-  const {poster, title, originalTitle, rating, ageRating, fullDescription, comments} = film;
+  const {poster, title, originalTitle, rating, ageRating, description, comments} = film;
 
-  const tableMarkup = createDetailsTableMarkup(film);
+  const filmFormatFields = Object.assign({}, film, {
+    releaseDate: formatDate(film.releaseDate),
+    duration: getFilmDuration(film.duration)
+  });
+  const tableMarkup = createDetailsTableMarkup(filmFormatFields);
   const watchListControl = createControlsMarkup(`watchlist`, film.isInWatchList);
   const watchedControl = createControlsMarkup(`watched`, film.isInWatched);
   const favoriteControl = createControlsMarkup(`favorite`, film.isInFavorite);
@@ -96,7 +101,7 @@ const createFilmDetailsTemplate = (film, emoji) => {
               </table>
 
               <p class="film-details__film-description">
-                ${fullDescription}
+                ${description}
               </p>
             </div>
           </div>
