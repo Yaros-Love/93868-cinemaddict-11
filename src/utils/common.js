@@ -43,7 +43,7 @@ const getFilmDuration = (minutes) => {
 };
 
 const formatReleaseDate = (date) => {
-  return moment(date).format(`YYYY`)
+  return moment(date).format(`YYYY`);
 };
 
 const formatDate = (date) => {

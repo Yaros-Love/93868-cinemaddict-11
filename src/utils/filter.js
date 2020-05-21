@@ -1,4 +1,4 @@
-import { FilterType } from "../const";
+import {FilterType} from "../const";
 
 const getWatchlistFilms = (films) => {
   return films.filter((film) => film.isInWatchList);
