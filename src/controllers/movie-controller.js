@@ -45,10 +45,6 @@ export default class MovieController {
       const newFilm = Movie.cloneMovie(film);
       newFilm.isInWatchList = !newFilm.isInWatchList;
       this._onDataChange(this, film, newFilm);
-
-      // this._onDataChange(this, this._film, Object.assign({}, this._film, {
-      //   isInWatchList: !film.isInWatchList,
-      // }));
     });
 
     this._filmComponent.setCardMarkAsWatchedClickHandler((evt) => {
@@ -57,10 +53,6 @@ export default class MovieController {
       const newFilm = Movie.cloneMovie(film);
       newFilm.isInWatched = !newFilm.isInWatched;
       this._onDataChange(this, film, newFilm);
-
-      // this._onDataChange(this, film, Object.assign({}, film, {
-      //   isInWatched: !film.isInWatched,
-      // }));
     });
 
     this._filmComponent.setCardFavoriteClickHandler((evt) => {
@@ -69,9 +61,6 @@ export default class MovieController {
       const newFilm = Movie.cloneMovie(film);
       newFilm.isInFavorite = !newFilm.isInFavorite;
       this._onDataChange(this, film, newFilm);
-      // this._onDataChange(this, film, Object.assign({}, film, {
-      //   isInFavorite: !film.isInFavorite,
-      // }));
     });
 
     this._filmDetailsComponent.setCardAddToWatchListClickHandler((evt) => {
@@ -80,10 +69,6 @@ export default class MovieController {
       const newFilm = Movie.cloneMovie(film);
       newFilm.isInWatchList = !newFilm.isInWatchList;
       this._onDataChange(this, film, newFilm);
-
-      // this._onDataChange(this, this._film, Object.assign({}, this._film, {
-      //   isInWatchList: !film.isInWatchList,
-      // }));
     });
 
     this._filmDetailsComponent.setCardMarkAsWatchedClickHandler((evt) => {
@@ -92,10 +77,6 @@ export default class MovieController {
       const newFilm = Movie.cloneMovie(film);
       newFilm.isInWatched = !newFilm.isInWatched;
       this._onDataChange(this, film, newFilm);
-
-      // this._onDataChange(this, film, Object.assign({}, film, {
-      //   isInWatched: !film.isInWatched,
-      // }));
     });
 
     this._filmDetailsComponent.setCardFavoriteClickHandler((evt) => {
@@ -104,10 +85,6 @@ export default class MovieController {
       const newFilm = Movie.cloneMovie(film);
       newFilm.isInFavorite = !newFilm.isInFavorite;
       this._onDataChange(this, film, newFilm);
-
-      // this._onDataChange(this, film, Object.assign({}, film, {
-      //   isInFavorite: !film.isInFavorite,
-      // }));
     });
 
     this._filmDetailsComponent.setDeleteCommentClickHandler((evt) => {

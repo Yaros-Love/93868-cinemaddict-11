@@ -60,13 +60,6 @@ export default class Movie {
     };
   }
 
-  // static parseComments(data) {
-  //   console.log(data)
-  //   return data.map((film) => {
-  //
-  //   })
-  // }
-
   static parseMovie(data) {
     return new Movie(data);
   }
