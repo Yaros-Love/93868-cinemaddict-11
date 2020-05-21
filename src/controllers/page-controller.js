@@ -44,9 +44,10 @@ const getSortedFilms = (films, sortType, from, to) => {
 };
 
 export default class PageController {
-  constructor(container, moviesModel) {
+  constructor(container, moviesModel, api) {
     this._container = container;
     this._moviesModel = moviesModel;
+    this._api = api;
 
     this._showedFilmControllers = [];
     this._showedTopRatedFilmControllers = [];
@@ -208,6 +209,7 @@ export default class PageController {
 
   _updateFilms(count = this._showingCardCount) {
     this._removeFilms(this._showedFilmControllers);
+    this._removeFilms(this._showedMostCommentedFilmControllers);
     this._renderFilms(this._moviesModel.getFilms().slice(0, count));
     this._renderMostCommentedFilms(this._moviesModel.getMostCommentedFilms().slice(0, EXTRA_CARD_COUNT));
     this._renderTopRatedFilms(this._moviesModel.getTopRatedFilms().slice(0, EXTRA_CARD_COUNT));
@@ -223,13 +225,17 @@ export default class PageController {
   }
 
   _onDataChange(filmController, oldData, newData) {
-    const isSuccess = this._moviesModel.updateFilms(oldData.id, newData);
 
-    if (isSuccess) {
-      const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedMostCommentedFilmControllers);
-      const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
-      showedFilmControllers.forEach((controller) => controller.render(newData));
-    }
+    this._api.updateFilm(oldData.id, newData)
+      .then((movieModel) => {
+        const isSuccess = this._moviesModel.updateFilms(oldData.id, movieModel);
+
+        if (isSuccess) {
+          const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedMostCommentedFilmControllers);
+          const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
+          showedFilmControllers.forEach((controller) => controller.render(movieModel));
+        }
+      });
   }
 
   _onFilterChange() {
@@ -240,5 +246,6 @@ export default class PageController {
     this._rerenderSortComponent(this._currentSortType);
 
     this._updateFilms(CARD_COUNT);
+    this._updateMostCommentedFilms();
   }
 }
