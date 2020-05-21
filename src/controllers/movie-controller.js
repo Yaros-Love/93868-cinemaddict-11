@@ -4,8 +4,8 @@ import {render, remove, RenderPosition, replace} from '../utils/render.js';
 import Movie from "../models/movie";
 
 const Mode = {
-  "DEFAULT": `default`,
-  "OPEN": `open`,
+  DEFAULT: `default`,
+  OPEN: `open`,
 };
 
 const isCmdEnterKeysCode = (evt) => {
