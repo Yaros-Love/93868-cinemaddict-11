@@ -7,7 +7,7 @@ const getTopRatedFilms = (films) => {
 
 const getMostCommentedFilms = (films) => {
   return films.sort((a, b) => b.comments.length - a.comments.length);
-}
+};
 
 export default class Movies {
   constructor() {
@@ -41,7 +41,6 @@ export default class Movies {
 
   setFilter(filterType) {
     this._activeFilterType = filterType;
-    console.log(this._activeFilterType);
 
     this._callHandlers(this._filterChangeHandlers);
   }

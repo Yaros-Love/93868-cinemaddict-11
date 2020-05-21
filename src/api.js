@@ -39,8 +39,16 @@ export default class API {
       })
   }
 
-  updateFilm() {
-
+  updateFilm(id, body) {
+    console.log(`body`, body.toRAW())
+    return this._load({
+      url: `movies/${id}`,
+      method: Method.PUT,
+      body: JSON.stringify(body.toRAW()),
+      headers: new Headers({"Content-Type": `application/json`})
+    })
+      .then((response) => response.json())
+      .then(Movie.parseMovie)
   }
 
   getComment(movie) {
