@@ -40,6 +40,7 @@ export default class API {
   }
 
   updateFilm(id, body) {
+    let film = {};
     return this._load({
       url: `movies/${id}`,
       method: Method.PUT,
@@ -47,7 +48,15 @@ export default class API {
       headers: new Headers({"Content-Type": `application/json`})
     })
       .then((response) => response.json())
-      .then(Movie.parseMovie)
+      .then((movie) => {
+        film = movie
+        return this.getComment(movie)
+      })
+      .then((commentsPromises) => Promise.all(commentsPromises))
+      .then((comments) => {
+        film.comments = comments
+        return Movie.parseMovie(film);
+      })
   }
 
   getComment(movie) {

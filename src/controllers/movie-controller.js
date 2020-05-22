@@ -2,7 +2,7 @@ import FilmCardComponent from '../components/film-card.js';
 import FilmDetailsComponent from '../components/film-details.js';
 import {render, remove, RenderPosition, replace} from '../utils/render.js';
 import Movie from "../models/movie";
-import  {Method} from "../api";
+import {Method} from "../api";
 
 const Mode = {
   DEFAULT: `default`,
@@ -108,16 +108,14 @@ export default class MovieController {
       if (isCmdEnterKeysCode(evt)) {
         const comment = this._filmDetailsComponent.getNewComment();
 
-
-
         if (comment) {
           const newComment = {
             "comment": comment.text,
             "date": comment.date,
             "emotion": comment.emotion
-          }
-          this._onDataChange(this, this._film, newComment, Method.POST);
+          };
 
+          this._onDataChange(this, this._film, newComment, Method.POST);
         }
       }
     });

@@ -61,7 +61,6 @@ export default class Movie {
   }
 
   static parseMovie(data) {
-    console.log('parse movie', data)
     return new Movie(data);
   }
 

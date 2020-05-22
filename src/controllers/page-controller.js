@@ -11,8 +11,6 @@ import MovieController from './movie-controller.js';
 import FilterController from '../controllers/filter-controller.js';
 import {Method} from "../api";
 
-
-
 const CARD_COUNT = 5;
 const EXTRA_CARD_COUNT = 2;
 
@@ -227,7 +225,7 @@ export default class PageController {
   }
 
   _onDataChange(filmController, oldData, newData, requestMethod) {
-    switch(requestMethod) {
+    switch (requestMethod) {
       case Method.PUT:
         this._api.updateFilm(oldData.id, newData)
           .then((movieModel) => {
@@ -240,6 +238,7 @@ export default class PageController {
             }
           });
         break;
+
       case Method.POST:
         this._api.createComment(oldData.id, newData)
           .then((movieModel) => {
@@ -252,11 +251,25 @@ export default class PageController {
             }
           });
         break;
+
       case Method.DELETE:
         this._api.deleteComment(newData)
-          .then((response) => console.log(response.status))
-    }
+          .then(() => {
+            const comments = oldData.comments.filter((comment) => {
+              return comment.id !== newData;
+            });
 
+            const updatedFilm = Object.assign(oldData, {comments});
+
+            const isSuccess = this._moviesModel.updateFilms(oldData.id, updatedFilm);
+
+            if (isSuccess) {
+              const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedMostCommentedFilmControllers);
+              const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
+              showedFilmControllers.forEach((controller) => controller.render(updatedFilm));
+            }
+          });
+    }
   }
 
   _onFilterChange() {
