@@ -249,6 +249,10 @@ export default class PageController {
               const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
               showedFilmControllers.forEach((controller) => controller.render(movieModel));
             }
+          })
+          .catch(() => {
+            filmController.shakeForm();
+            filmController.showErrorBorderOnInput();
           });
         break;
 
@@ -268,7 +272,12 @@ export default class PageController {
               const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
               showedFilmControllers.forEach((controller) => controller.render(updatedFilm));
             }
-          });
+          })
+          .catch(() => {
+            filmController.shakeComment(newData);
+          })
+
+
     }
   }
 

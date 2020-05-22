@@ -1,4 +1,5 @@
 import AbstractComponent from "./abstract-component";
+import {formatCommentDate} from "../utils/common";
 
 export default class FilmCommentComponent extends AbstractComponent {
   constructor({id, comment, emotion, author, date}) {
@@ -7,7 +8,7 @@ export default class FilmCommentComponent extends AbstractComponent {
     this._emoji = emotion;
     this._text = comment;
     this._author = author;
-    this._date = date;
+    this._date = formatCommentDate(date);
   }
 
   getTemplate() {

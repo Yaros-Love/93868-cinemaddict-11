@@ -1,7 +1,6 @@
 import {createFilmDetailsTemplate} from '../templates/film-details';
 import AbstractSmartComponent from './abstract-smart-component.js';
-import {encode} from 'he';
-import moment from "moment";
+import {encode} from 'he';import moment from "moment";
 
 export default class FilmDetails extends AbstractSmartComponent {
   constructor(film) {
@@ -20,7 +19,7 @@ export default class FilmDetails extends AbstractSmartComponent {
     this._element = this.getElement();
 
     this._setEmojiClickHandler();
-
+    this._setRemoveRedBorderClickHandler();
   }
   recoveryListeners() {
     this.setCardAddToWatchListClickHandler(this._addWatchListHandler);
@@ -28,9 +27,11 @@ export default class FilmDetails extends AbstractSmartComponent {
     this.setCardFavoriteClickHandler(this._favoriteHandler);
     this.setCloseButtonClickHandler(this._closeEscButtonHandler);
     this._setEmojiClickHandler();
+    this._setRemoveRedBorderClickHandler();
     this.setDeleteCommentClickHandler(this._deleteButtonClickHandler);
     this.setAddNewCommentHandler(this._addNewCommentHandler);
   }
+
   getTemplate() {
     return createFilmDetailsTemplate(this._film, this._commentEmoji);
   }
@@ -90,12 +91,18 @@ export default class FilmDetails extends AbstractSmartComponent {
     });
   }
 
+  _setRemoveRedBorderClickHandler() {
+    const commentInput = this._element.querySelector(`.film-details__comment-input`);
+    commentInput.addEventListener(`click`, () => {
+      commentInput.style.border = `none`;
+    });
+  }
+
   getNewComment() {
     const textCommentElement = this._element.querySelector(`.film-details__comment-input`);
 
     const text = encode(textCommentElement.value);
     const emotion = this._commentEmoji;
-    const author = `Tester`;
 
     if (!emotion || !text) {
       return null;
@@ -106,7 +113,6 @@ export default class FilmDetails extends AbstractSmartComponent {
     return {
       text,
       emotion,
-      author,
       date,
     };
   }

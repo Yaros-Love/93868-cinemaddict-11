@@ -9,6 +9,8 @@ const Mode = {
   OPEN: `open`,
 };
 
+const SHAKE_ANIMATION_TIMEOUT = 600;
+
 const isCmdEnterKeysCode = (evt) => {
   return evt.code === `Enter` && (evt.ctrlKey || evt.metaKey);
 };
@@ -95,12 +97,9 @@ export default class MovieController {
       const commentItem = deleteButtonElement.closest(`.film-details__comment`);
       const removeCommentId = commentItem.dataset.commentId;
 
-      // const comments = this._film.comments.filter((comment) => {
-      //   return comment.id !== removeCommentId;
-      // });
+      deleteButtonElement.setAttribute(`disabled`, `true`);
+      deleteButtonElement.innerHTML = 'Deleting...';
 
-
-      // this._onDataChange(this, this._film, Object.assign(this._film, {comments}));
       this._onDataChange(this, this._film, removeCommentId, Method.DELETE);
     });
 
@@ -115,6 +114,8 @@ export default class MovieController {
             "emotion": comment.emotion
           };
 
+          this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-input`).setAttribute(`disabled`, `true`);
+
           this._onDataChange(this, this._film, newComment, Method.POST);
         }
       }
@@ -126,6 +127,32 @@ export default class MovieController {
     } else {
       render(this._container, this._filmComponent);
     }
+  }
+
+  shakeForm() {
+    this._filmDetailsComponent.getElement().querySelector(`.film-details__new-comment`).style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+
+    setTimeout(() => {
+      this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-label`).style.animation = ``;
+    }, SHAKE_ANIMATION_TIMEOUT);
+  }
+
+  shakeComment(commentId) {
+    const commentBlockElement = this._filmDetailsComponent.getElement().querySelector(`.film-details__comment[data-comment-id='${commentId}']`)
+    commentBlockElement.style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+
+    setTimeout(() => {
+      commentBlockElement.style.animation = ``;
+    }, SHAKE_ANIMATION_TIMEOUT);
+
+    const buttonDeleteElement = commentBlockElement.querySelector(`.film-details__comment-delete`);
+    buttonDeleteElement.innerHTML = `Delete`;
+    buttonDeleteElement.removeAttribute(`disabled`);
+  }
+
+  showErrorBorderOnInput() {
+    this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-input`).style.border = `2px solid red`
+    this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-input`).removeAttribute(`disabled`);
   }
 
   destroy() {
