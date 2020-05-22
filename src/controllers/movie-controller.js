@@ -2,6 +2,7 @@ import FilmCardComponent from '../components/film-card.js';
 import FilmDetailsComponent from '../components/film-details.js';
 import {render, remove, RenderPosition, replace} from '../utils/render.js';
 import Movie from "../models/movie";
+import  {Method} from "../api";
 
 const Mode = {
   DEFAULT: `default`,
@@ -44,7 +45,7 @@ export default class MovieController {
 
       const newFilm = Movie.cloneMovie(film);
       newFilm.isInWatchList = !newFilm.isInWatchList;
-      this._onDataChange(this, film, newFilm);
+      this._onDataChange(this, film, newFilm, Method.PUT);
     });
 
     this._filmComponent.setCardMarkAsWatchedClickHandler((evt) => {
@@ -52,7 +53,7 @@ export default class MovieController {
 
       const newFilm = Movie.cloneMovie(film);
       newFilm.isInWatched = !newFilm.isInWatched;
-      this._onDataChange(this, film, newFilm);
+      this._onDataChange(this, film, newFilm, Method.PUT);
     });
 
     this._filmComponent.setCardFavoriteClickHandler((evt) => {
@@ -60,7 +61,7 @@ export default class MovieController {
 
       const newFilm = Movie.cloneMovie(film);
       newFilm.isInFavorite = !newFilm.isInFavorite;
-      this._onDataChange(this, film, newFilm);
+      this._onDataChange(this, film, newFilm, Method.PUT);
     });
 
     this._filmDetailsComponent.setCardAddToWatchListClickHandler((evt) => {
@@ -68,7 +69,7 @@ export default class MovieController {
 
       const newFilm = Movie.cloneMovie(film);
       newFilm.isInWatchList = !newFilm.isInWatchList;
-      this._onDataChange(this, film, newFilm);
+      this._onDataChange(this, film, newFilm, Method.PUT);
     });
 
     this._filmDetailsComponent.setCardMarkAsWatchedClickHandler((evt) => {
@@ -76,7 +77,7 @@ export default class MovieController {
 
       const newFilm = Movie.cloneMovie(film);
       newFilm.isInWatched = !newFilm.isInWatched;
-      this._onDataChange(this, film, newFilm);
+      this._onDataChange(this, film, newFilm, Method.PUT);
     });
 
     this._filmDetailsComponent.setCardFavoriteClickHandler((evt) => {
@@ -84,7 +85,7 @@ export default class MovieController {
 
       const newFilm = Movie.cloneMovie(film);
       newFilm.isInFavorite = !newFilm.isInFavorite;
-      this._onDataChange(this, film, newFilm);
+      this._onDataChange(this, film, newFilm, Method.PUT);
     });
 
     this._filmDetailsComponent.setDeleteCommentClickHandler((evt) => {
@@ -94,21 +95,29 @@ export default class MovieController {
       const commentItem = deleteButtonElement.closest(`.film-details__comment`);
       const removeCommentId = commentItem.dataset.commentId;
 
-      const comments = this._film.comments.filter((comment) => {
-        return comment.id !== removeCommentId;
-      });
+      // const comments = this._film.comments.filter((comment) => {
+      //   return comment.id !== removeCommentId;
+      // });
 
 
-      this._onDataChange(this, this._film, Object.assign(this._film, {comments}));
+      // this._onDataChange(this, this._film, Object.assign(this._film, {comments}));
+      this._onDataChange(this, this._film, removeCommentId, Method.DELETE);
     });
 
     this._filmDetailsComponent.setAddNewCommentHandler((evt) => {
       if (isCmdEnterKeysCode(evt)) {
         const comment = this._filmDetailsComponent.getNewComment();
 
+
+
         if (comment) {
-          const newComments = this._film.comments.concat(comment);
-          this._onDataChange(this, this._film, Object.assign(this._film, {"comments": newComments}));
+          const newComment = {
+            "comment": comment.text,
+            "date": comment.date,
+            "emotion": comment.emotion
+          }
+          this._onDataChange(this, this._film, newComment, Method.POST);
+
         }
       }
     });

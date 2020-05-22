@@ -1,7 +1,7 @@
 import {createFilmDetailsTemplate} from '../templates/film-details';
 import AbstractSmartComponent from './abstract-smart-component.js';
 import {encode} from 'he';
-import {formatCommentDate} from "../utils/common";
+import moment from "moment";
 
 export default class FilmDetails extends AbstractSmartComponent {
   constructor(film) {
@@ -101,11 +101,9 @@ export default class FilmDetails extends AbstractSmartComponent {
       return null;
     }
 
-    const id = Math.floor(Math.random() * Date.now()) + ``;
-    const date = formatCommentDate(new Date());
+    const date = moment().format();
 
     return {
-      id,
       text,
       emotion,
       author,

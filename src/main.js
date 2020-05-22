@@ -29,7 +29,6 @@ render(footerStatisticsElement, new FooterStatComponent(moviesCount));
 
 api.getFilms()
 .then((movies) => {
-  console.log(movies)
   moviesModel.setFilms(movies)
   pageController.render();
 })

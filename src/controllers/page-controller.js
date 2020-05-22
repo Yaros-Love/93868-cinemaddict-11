@@ -9,6 +9,8 @@ import {remove, render, RenderPosition} from '../utils/render.js';
 import {SortType} from '../templates/sort.js';
 import MovieController from './movie-controller.js';
 import FilterController from '../controllers/filter-controller.js';
+import {Method} from "../api";
+
 
 
 const CARD_COUNT = 5;
@@ -224,18 +226,37 @@ export default class PageController {
     this._renderMostCommentedFilms(this._moviesModel.getMostCommentedFilms().slice(0, EXTRA_CARD_COUNT));
   }
 
-  _onDataChange(filmController, oldData, newData) {
+  _onDataChange(filmController, oldData, newData, requestMethod) {
+    switch(requestMethod) {
+      case Method.PUT:
+        this._api.updateFilm(oldData.id, newData)
+          .then((movieModel) => {
+            const isSuccess = this._moviesModel.updateFilms(oldData.id, movieModel);
 
-    this._api.updateFilm(oldData.id, newData)
-      .then((movieModel) => {
-        const isSuccess = this._moviesModel.updateFilms(oldData.id, movieModel);
+            if (isSuccess) {
+              const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedMostCommentedFilmControllers);
+              const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
+              showedFilmControllers.forEach((controller) => controller.render(movieModel));
+            }
+          });
+        break;
+      case Method.POST:
+        this._api.createComment(oldData.id, newData)
+          .then((movieModel) => {
+            const isSuccess = this._moviesModel.updateFilms(oldData.id, movieModel);
 
-        if (isSuccess) {
-          const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedMostCommentedFilmControllers);
-          const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
-          showedFilmControllers.forEach((controller) => controller.render(movieModel));
-        }
-      });
+            if (isSuccess) {
+              const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedMostCommentedFilmControllers);
+              const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
+              showedFilmControllers.forEach((controller) => controller.render(movieModel));
+            }
+          });
+        break;
+      case Method.DELETE:
+        this._api.deleteComment(newData)
+          .then((response) => console.log(response.status))
+    }
+
   }
 
   _onFilterChange() {
