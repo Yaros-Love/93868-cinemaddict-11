@@ -50,9 +50,7 @@ export default class PageController {
     this._api = api;
 
     this._showedFilmControllers = [];
-    this._showedTopRatedFilmControllers = [];
     this._showedMostCommentedFilmControllers = [];
-    this._showedCommentsFilmControllers = [];
 
     this._showingCardCount = CARD_COUNT;
     this._currentSortType = SortType.DEFAULT;
@@ -225,30 +223,21 @@ export default class PageController {
   }
 
   _onDataChange(filmController, oldData, newData, requestMethod) {
+    let isSuccess;
     switch (requestMethod) {
       case Method.PUT:
         this._api.updateFilm(oldData.id, newData)
           .then((movieModel) => {
-            const isSuccess = this._moviesModel.updateFilms(oldData.id, movieModel);
-
-            if (isSuccess) {
-              const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedMostCommentedFilmControllers);
-              const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
-              showedFilmControllers.forEach((controller) => controller.render(movieModel));
-            }
+            isSuccess = this._moviesModel.updateFilms(oldData.id, movieModel);
+            this._renderUpdatedMovieModel(isSuccess, oldData, movieModel);
           });
         break;
 
       case Method.POST:
         this._api.createComment(oldData.id, newData)
           .then((movieModel) => {
-            const isSuccess = this._moviesModel.updateFilms(oldData.id, movieModel);
-
-            if (isSuccess) {
-              const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedMostCommentedFilmControllers);
-              const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
-              showedFilmControllers.forEach((controller) => controller.render(movieModel));
-            }
+            isSuccess = this._moviesModel.updateFilms(oldData.id, movieModel);
+            this._renderUpdatedMovieModel(isSuccess, oldData, movieModel);
           })
           .catch(() => {
             filmController.shakeForm();
@@ -265,20 +254,25 @@ export default class PageController {
 
             const updatedFilm = Object.assign(oldData, {comments});
 
-            const isSuccess = this._moviesModel.updateFilms(oldData.id, updatedFilm);
-
-            if (isSuccess) {
-              const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedMostCommentedFilmControllers);
-              const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
-              showedFilmControllers.forEach((controller) => controller.render(updatedFilm));
-            }
+            isSuccess = this._moviesModel.updateFilms(oldData.id, updatedFilm);
+            this._renderUpdatedMovieModel(isSuccess, oldData, updatedFilm);
           })
           .catch(() => {
             filmController.shakeComment(newData);
-          })
-
-
+          });
+        break;
     }
+
+  }
+
+  _renderUpdatedMovieModel(isSuccess, oldData, newData) {
+    if (!isSuccess) {
+      return;
+    }
+
+    const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedMostCommentedFilmControllers);
+    const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
+    showedFilmControllers.forEach((controller) => controller.render(newData));
   }
 
   _onFilterChange() {

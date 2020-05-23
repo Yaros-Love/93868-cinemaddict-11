@@ -32,7 +32,6 @@ export default class API {
       })
       .then((commentsPromises) => Promise.all(commentsPromises))
       .then(comments => {
-        console.log(moviesArr, comments);
         moviesArr.forEach((movie, i) => movie.comments = comments[i]);
 
         return Movie.parseMovies(moviesArr);
@@ -56,8 +55,7 @@ export default class API {
       .then((comments) => {
         film.comments = comments
         return Movie.parseMovie(film);
-      })
-  }
+      })}
 
   getComment(movie) {
     return this._load({url: `comments/${movie.id}`})

@@ -98,7 +98,7 @@ export default class MovieController {
       const removeCommentId = commentItem.dataset.commentId;
 
       deleteButtonElement.setAttribute(`disabled`, `true`);
-      deleteButtonElement.innerHTML = 'Deleting...';
+      deleteButtonElement.innerHTML = `Deleting...`;
 
       this._onDataChange(this, this._film, removeCommentId, Method.DELETE);
     });
@@ -138,7 +138,7 @@ export default class MovieController {
   }
 
   shakeComment(commentId) {
-    const commentBlockElement = this._filmDetailsComponent.getElement().querySelector(`.film-details__comment[data-comment-id='${commentId}']`)
+    const commentBlockElement = this._filmDetailsComponent.getElement().querySelector(`.film-details__comment[data-comment-id='${commentId}']`);
     commentBlockElement.style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
 
     setTimeout(() => {
@@ -151,7 +151,7 @@ export default class MovieController {
   }
 
   showErrorBorderOnInput() {
-    this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-input`).style.border = `2px solid red`
+    this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-input`).style.border = `1px solid red`;
     this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-input`).removeAttribute(`disabled`);
   }
 

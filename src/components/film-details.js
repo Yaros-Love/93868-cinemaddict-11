@@ -1,6 +1,7 @@
 import {createFilmDetailsTemplate} from '../templates/film-details';
 import AbstractSmartComponent from './abstract-smart-component.js';
-import {encode} from 'he';import moment from "moment";
+import {encode} from 'he';
+import moment from "moment";
 
 export default class FilmDetails extends AbstractSmartComponent {
   constructor(film) {
