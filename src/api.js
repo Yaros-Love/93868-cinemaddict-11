@@ -32,7 +32,6 @@ export default class API {
       })
       .then((commentsPromises) => Promise.all(commentsPromises))
       .then(comments => {
-        console.log(moviesArr, comments);
         moviesArr.forEach((movie, i) => movie.comments = comments[i]);
 
         return Movie.parseMovies(moviesArr);
@@ -40,6 +39,7 @@ export default class API {
   }
 
   updateFilm(id, body) {
+    let film = {};
     return this._load({
       url: `movies/${id}`,
       method: Method.PUT,
@@ -47,20 +47,42 @@ export default class API {
       headers: new Headers({"Content-Type": `application/json`})
     })
       .then((response) => response.json())
-      .then(Movie.parseMovie)
-  }
+      .then((movie) => {
+        film = movie
+        return this.getComment(movie)
+      })
+      .then((commentsPromises) => Promise.all(commentsPromises))
+      .then((comments) => {
+        film.comments = comments
+        return Movie.parseMovie(film);
+      })}
 
   getComment(movie) {
     return this._load({url: `comments/${movie.id}`})
         .then((response) =>  response.json())
   }
 
-  createComment() {
+  createComment(id, body) {
+    let movie = {};
+    return this._load({
+      url: `comments/${id}`,
+      method: Method.POST,
+      body: JSON.stringify(body),
+      headers: new Headers({"Content-Type": `application/json`}),
+    })
+      .then((response) => response.json())
+      .then((data) => movie = data.movie)
+      .then((movie) => this.getComment(movie))
+      .then((commentsPromises) => Promise.all(commentsPromises))
+      .then((comments) => {
+        movie.comments = comments
+        return Movie.parseMovie(movie);
+      })
 
   }
 
-  deleteComment() {
-
+  deleteComment(id) {
+    return this._load({url: `comments/${id}`, method: Method.DELETE})
   }
 
   _load({url, method = Method.GET, body = null, headers = new Headers()}) {
@@ -73,3 +95,5 @@ export default class API {
       });
   }
 }
+
+export {Method};

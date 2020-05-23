@@ -1,5 +1,5 @@
 import {getRandomIntegerNumber} from '../utils/common';
-import {ALL_FILMS_COUNT, FilterType} from '.././const.js';
+import {ALL_FILMS_COUNT, FilterType} from '../const.js';
 
 const filterNames = Object.values(FilterType);
 
