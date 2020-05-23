@@ -9,7 +9,7 @@ import {remove, render, RenderPosition} from '../utils/render.js';
 import {SortType} from '../templates/sort.js';
 import MovieController from './movie-controller.js';
 import FilterController from '../controllers/filter-controller.js';
-
+import {Method} from "../api";
 
 const CARD_COUNT = 5;
 const EXTRA_CARD_COUNT = 2;
@@ -44,14 +44,13 @@ const getSortedFilms = (films, sortType, from, to) => {
 };
 
 export default class PageController {
-  constructor(container, moviesModel) {
+  constructor(container, moviesModel, api) {
     this._container = container;
     this._moviesModel = moviesModel;
+    this._api = api;
 
     this._showedFilmControllers = [];
-    this._showedTopRatedFilmControllers = [];
     this._showedMostCommentedFilmControllers = [];
-    this._showedCommentsFilmControllers = [];
 
     this._showingCardCount = CARD_COUNT;
     this._currentSortType = SortType.DEFAULT;
@@ -208,6 +207,7 @@ export default class PageController {
 
   _updateFilms(count = this._showingCardCount) {
     this._removeFilms(this._showedFilmControllers);
+    this._removeFilms(this._showedMostCommentedFilmControllers);
     this._renderFilms(this._moviesModel.getFilms().slice(0, count));
     this._renderMostCommentedFilms(this._moviesModel.getMostCommentedFilms().slice(0, EXTRA_CARD_COUNT));
     this._renderTopRatedFilms(this._moviesModel.getTopRatedFilms().slice(0, EXTRA_CARD_COUNT));
@@ -222,14 +222,57 @@ export default class PageController {
     this._renderMostCommentedFilms(this._moviesModel.getMostCommentedFilms().slice(0, EXTRA_CARD_COUNT));
   }
 
-  _onDataChange(filmController, oldData, newData) {
-    const isSuccess = this._moviesModel.updateFilms(oldData.id, newData);
+  _onDataChange(filmController, oldData, newData, requestMethod) {
+    let isSuccess;
+    switch (requestMethod) {
+      case Method.PUT:
+        this._api.updateFilm(oldData.id, newData)
+          .then((movieModel) => {
+            isSuccess = this._moviesModel.updateFilms(oldData.id, movieModel);
+            this._renderUpdatedMovieModel(isSuccess, oldData, movieModel);
+          });
+        break;
 
-    if (isSuccess) {
-      const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedMostCommentedFilmControllers);
-      const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
-      showedFilmControllers.forEach((controller) => controller.render(newData));
+      case Method.POST:
+        this._api.createComment(oldData.id, newData)
+          .then((movieModel) => {
+            isSuccess = this._moviesModel.updateFilms(oldData.id, movieModel);
+            this._renderUpdatedMovieModel(isSuccess, oldData, movieModel);
+          })
+          .catch(() => {
+            filmController.shakeForm();
+            filmController.showErrorBorderOnInput();
+          });
+        break;
+
+      case Method.DELETE:
+        this._api.deleteComment(newData)
+          .then(() => {
+            const comments = oldData.comments.filter((comment) => {
+              return comment.id !== newData;
+            });
+
+            const updatedFilm = Object.assign(oldData, {comments});
+
+            isSuccess = this._moviesModel.updateFilms(oldData.id, updatedFilm);
+            this._renderUpdatedMovieModel(isSuccess, oldData, updatedFilm);
+          })
+          .catch(() => {
+            filmController.shakeComment(newData);
+          });
+        break;
     }
+
+  }
+
+  _renderUpdatedMovieModel(isSuccess, oldData, newData) {
+    if (!isSuccess) {
+      return;
+    }
+
+    const allShowedControllers = this._showedFilmControllers.concat(this._showedFilmControllers, this._showedMostCommentedFilmControllers);
+    const showedFilmControllers = allShowedControllers.filter((controller) => controller.getFilm() === oldData);
+    showedFilmControllers.forEach((controller) => controller.render(newData));
   }
 
   _onFilterChange() {
@@ -240,5 +283,6 @@ export default class PageController {
     this._rerenderSortComponent(this._currentSortType);
 
     this._updateFilms(CARD_COUNT);
+    this._updateMostCommentedFilms();
   }
 }
