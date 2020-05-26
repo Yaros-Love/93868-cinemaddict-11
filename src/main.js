@@ -6,6 +6,7 @@ import PageController from './controllers/page-controller.js';
 import MoviesModel from './models/movies.js';
 import LoadingComponent from "./components/loading-component";
 import {remove} from "./utils/render";
+import StatComponent from "./components/stats";
 
 const AUTHORIZATION = `Basic eo0w59075hf7ik29889a=`;
 const END_POINT = `https://11.ecmascript.pages.academy/cinemaddict`;
@@ -22,7 +23,31 @@ const pageController = new PageController(mainElement, moviesModel, api);
 
 
 render(headerElement, profileComponent);
-render(mainElement, loadingComponent)
+render(mainElement, loadingComponent);
+
+let statisticComponent = null;
+mainElement.addEventListener(`click`, (evt) => {
+  const button = evt.target.closest(`.main-navigation__additional, .main-navigation__item`);
+
+  if (!button) {
+    return;
+  }
+
+  if (button.classList.contains(`main-navigation__additional`)) {
+    pageController.hide();
+    if (statisticComponent) {
+      remove(statisticComponent);
+    }
+    statisticComponent = new StatComponent(moviesModel);
+    render(mainElement, statisticComponent);
+  } else if (button.classList.contains(`main-navigation__item`)) {
+    if (statisticComponent) {
+      remove(statisticComponent);
+    }
+    pageController.show();
+  }
+});
+
 
 
 api.getFilms()

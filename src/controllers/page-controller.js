@@ -285,4 +285,14 @@ export default class PageController {
     this._updateFilms(CARD_COUNT);
     this._updateMostCommentedFilms();
   }
+
+  hide() {
+    this._filmsComponent.hide();
+  }
+
+  show() {
+    this._filmsComponent.show();
+    this._showingCardCount = CARD_COUNT;
+    this._updateFilms();
+  }
 }
