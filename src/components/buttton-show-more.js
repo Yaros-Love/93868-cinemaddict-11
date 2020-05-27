@@ -1,4 +1,4 @@
-import {createButtonShowMoreTemplate} from './../templates/button-show-more.js';
+import {createButtonShowMoreTemplate} from '../templates/button-show-more.js';
 import AbstractComponent from './abstract-component.js';
 
 

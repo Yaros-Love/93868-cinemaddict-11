@@ -31,7 +31,7 @@ const getAllFilmsGenres = (films) => {
 
   films.forEach((film) => {
     film.genres.forEach((genre) => genresAll.add(genre));
-  })
+  });
 
   return Array.from(genresAll);
 };
@@ -46,7 +46,7 @@ const getFilmsGenresCount = (films) => {
     return {
       genre,
       count: 0
-    }
+    };
   });
 
   films.forEach((film) => {
@@ -64,9 +64,8 @@ const getFilmsGenresCount = (films) => {
 export default class StatComponent extends AbstractSmartComponent {
   constructor(moviesModel) {
     super();
-    console.log(`movie model`, moviesModel)
     this._films = moviesModel;
-    this._watchedFilms = this._films.getFilms().filter((it) => it.isInWatched);
+    this._watchedFilms = this._films.getFilmsAll().filter((it) => it.isInWatched);
     this._filteredWatchedFilms = this._watchedFilms.slice();
     this._chart = null;
     this._currentFilter = FILTERS.ALL;

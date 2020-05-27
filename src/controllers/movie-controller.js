@@ -57,10 +57,10 @@ export default class MovieController {
       evt.preventDefault();
 
       const newFilm = Movie.cloneMovie(film);
-      const now = moment().format('YYYY-MM-DDTHH:mm:ss');
+      const now = moment().format(`YYYY-MM-DDTHH:mm:ss`);
 
       newFilm.isInWatched = !newFilm.isInWatched;
-      newFilm.watchingDate =  newFilm.isInWatched ? now : null;
+      newFilm.watchingDate = newFilm.isInWatched ? now : null;
 
       this._onDataChange(this, film, newFilm, Method.PUT);
     });

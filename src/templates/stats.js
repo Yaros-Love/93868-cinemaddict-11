@@ -11,7 +11,7 @@ const getProfileRating = (watchedFilmsCount) => {
 
 
 const getFilters = (currentFilter) => {
-  return  Object.values(FILTERS).map((filter) => {
+  return Object.values(FILTERS).map((filter) => {
     const label = filter
       .replace(filter[0], filter[0].toUpperCase())
       .replace(`-`, ` `);
@@ -22,7 +22,7 @@ const getFilters = (currentFilter) => {
         <label for="statistic-${filter}" class="statistic__filters-label">${label}</label>
       `.trim();
   });
-}
+};
 
 const createStatsTemplate = (films, watchedFilmsCount, topGenre, filmDuration, currentFilter) => {
   const filters = getFilters(currentFilter);
@@ -58,6 +58,6 @@ const createStatsTemplate = (films, watchedFilmsCount, topGenre, filmDuration, c
 
   </section>`
   );
-}
+};
 
 export {createStatsTemplate};
