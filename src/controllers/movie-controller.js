@@ -3,6 +3,7 @@ import FilmDetailsComponent from '../components/film-details.js';
 import {render, remove, RenderPosition, replace} from '../utils/render.js';
 import Movie from "../models/movie";
 import {Method} from "../api";
+import moment from "moment";
 
 const Mode = {
   DEFAULT: `default`,
@@ -46,7 +47,9 @@ export default class MovieController {
       evt.preventDefault();
 
       const newFilm = Movie.cloneMovie(film);
+
       newFilm.isInWatchList = !newFilm.isInWatchList;
+
       this._onDataChange(this, film, newFilm, Method.PUT);
     });
 
@@ -54,7 +57,11 @@ export default class MovieController {
       evt.preventDefault();
 
       const newFilm = Movie.cloneMovie(film);
+      const now = moment().format(`YYYY-MM-DDTHH:mm:ss`);
+
       newFilm.isInWatched = !newFilm.isInWatched;
+      newFilm.watchingDate = newFilm.isInWatched ? now : null;
+
       this._onDataChange(this, film, newFilm, Method.PUT);
     });
 
@@ -170,6 +177,8 @@ export default class MovieController {
   }
 
   _closeFilmPopup() {
+    const commentInputElement = this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-input`);
+    commentInputElement.value = ``;
     document.querySelector(`body`).removeChild(this._filmDetailsComponent.getElement());
     document.removeEventListener(`keydown`, this._onEscKeyDown);
     this._updateMostCommented();

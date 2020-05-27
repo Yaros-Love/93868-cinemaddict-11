@@ -86,9 +86,7 @@ export default class PageController {
     const container = this._container;
     const films = this._moviesModel.getFilms();
 
-    this._filterController = new FilterController(container, this._moviesModel);
-
-    this._filterController.render();
+    this._renderFilterComponent(container, this._moviesModel);
     this._renderSort();
     render(container, this._filmsComponent);
 
@@ -118,6 +116,12 @@ export default class PageController {
 
 
     this._renderShowMoreButton(films.slice(0, this._showingCardCount));
+  }
+
+  _renderFilterComponent(container, moviesModel) {
+    this._filterController = new FilterController(container, moviesModel);
+
+    this._filterController.render();
   }
 
   _rerenderSortComponent(sortType) {
@@ -284,5 +288,26 @@ export default class PageController {
 
     this._updateFilms(CARD_COUNT);
     this._updateMostCommentedFilms();
+  }
+
+  hide() {
+    const activeFilterElement = this._container.querySelector(`.main-navigation__item.main-navigation__item--active`);
+    const statsElement = this._container.querySelector(`.main-navigation__additional`);
+
+    remove(this._sortComponent);
+    this._filmsComponent.hide();
+
+    activeFilterElement.classList.remove(`main-navigation__item--active`);
+    statsElement.classList.add(`main-navigation__additional--active`);
+  }
+
+  show() {
+    const statsElement = this._container.querySelector(`.main-navigation__additional`);
+    statsElement.classList.remove(`main-navigation__additional--active`);
+    this._filterController.render();
+
+    this._filmsComponent.show();
+    this._showingCardCount = CARD_COUNT;
+    this._updateFilms();
   }
 }

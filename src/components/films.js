@@ -1,4 +1,4 @@
-import {createFilmsTemplate} from './../templates/films.js';
+import {createFilmsTemplate} from '../templates/films.js';
 import AbstractComponent from './abstract-component.js';
 
 

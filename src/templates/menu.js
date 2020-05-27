@@ -1,5 +1,5 @@
 const createFilterMarkup = (filter, isActive) => {
-  const isFilterAll = !!(filter.name === `All movies`);
+  const isFilterAll = filter.name === `All movies`;
 
   return (`
     <a href="#${filter.name}" id="${filter.name}" class="main-navigation__item

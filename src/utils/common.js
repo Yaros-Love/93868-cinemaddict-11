@@ -54,4 +54,5 @@ const formatCommentDate = (date) => {
   return moment(date).format(`YYYY/MM/DD hh:mm`);
 };
 
+
 export {getRandomIntegerNumber, getRandomArrayItem, getFilmDuration, getRandomArray, formatDate, getRandomDate, formatCommentDate, formatReleaseDate};
