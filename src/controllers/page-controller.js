@@ -10,6 +10,7 @@ import {SortType} from '../templates/sort.js';
 import MovieController from './movie-controller.js';
 import FilterController from '../controllers/filter-controller.js';
 import {Method} from "../api";
+import moment from "moment";
 
 const CARD_COUNT = 5;
 const EXTRA_CARD_COUNT = 2;
@@ -30,7 +31,7 @@ const getSortedFilms = (films, sortType, from, to) => {
 
   switch (sortType) {
     case SortType.DATE:
-      sortedFilms = showingFilms.sort((a, b) => b.productionDate - a.productionDate);
+      sortedFilms = showingFilms.sort((a, b) => moment(b.releaseDate) - moment(a.releaseDate));
       break;
     case SortType.RATING:
       sortedFilms = showingFilms.sort((a, b) => b.rating - a.rating);

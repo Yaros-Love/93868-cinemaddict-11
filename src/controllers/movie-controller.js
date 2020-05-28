@@ -137,10 +137,11 @@ export default class MovieController {
   }
 
   shakeForm() {
-    this._filmDetailsComponent.getElement().querySelector(`.film-details__new-comment`).style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+    const newCommentElement = this._filmDetailsComponent.getElement().querySelector(`.film-details__new-comment`);
+    newCommentElement.style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
 
     setTimeout(() => {
-      this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-label`).style.animation = ``;
+      newCommentElement.style.animation = ``;
     }, SHAKE_ANIMATION_TIMEOUT);
   }
 
@@ -174,11 +175,13 @@ export default class MovieController {
     render(footerElement, this._filmDetailsComponent, RenderPosition.AFTEREND);
     document.addEventListener(`keydown`, this._onEscKeyDown);
     this._mode = Mode.OPEN;
+    this._filmDetailsComponent.rerender();
   }
 
   _closeFilmPopup() {
     const commentInputElement = this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-input`);
     commentInputElement.value = ``;
+
     document.querySelector(`body`).removeChild(this._filmDetailsComponent.getElement());
     document.removeEventListener(`keydown`, this._onEscKeyDown);
     this._updateMostCommented();
