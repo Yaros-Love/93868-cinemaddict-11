@@ -33,7 +33,7 @@ export default class API {
       .then((commentsPromises) => Promise.all(commentsPromises))
       .then((comments) => {
         movies.forEach((movie, i) => {
-          movie.comments = comments[i]
+          movie.comments = comments[i];
         });
         return Movie.parseMovies(movies);
       });
@@ -74,7 +74,8 @@ export default class API {
     })
       .then((response) => response.json())
       .then((data) => {
-        return film = data.movie;
+        film = data.movie;
+        return film;
       })
       .then((movie) => this.getComment(movie))
       .then((commentsPromises) => Promise.all(commentsPromises))
