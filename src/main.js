@@ -21,7 +21,6 @@ const loadingComponent = new LoadingComponent();
 const profileComponent = new ProfileComponent(moviesModel);
 const pageController = new PageController(mainElement, moviesModel, api);
 
-
 render(headerElement, profileComponent);
 render(mainElement, loadingComponent);
 
@@ -49,18 +48,17 @@ mainElement.addEventListener(`click`, (evt) => {
 });
 
 
-
 api.getFilms()
-.then((movies) => {
-  remove(loadingComponent);
-  moviesModel.setFilms(movies);
-  profileComponent.rerender();
-  pageController.render();
-  render(footerStatisticsElement, new FooterStatComponent(movies));
-})
+  .then((movies) => {
+    remove(loadingComponent);
+    moviesModel.setFilms(movies);
+    profileComponent.rerender();
+    pageController.render();
+    render(footerStatisticsElement, new FooterStatComponent(movies));
+  })
   .catch(() => {
     remove(loadingComponent);
     moviesModel.setFilms([]);
     profileComponent.rerender();
     pageController.render();
-  })
+  });

@@ -1,7 +1,8 @@
-import {createFilmDetailsTemplate} from '../templates/film-details';
+import {createFilmDetailsTemplate, createPlaceholderEmojiMarkup} from '../templates/film-details';
 import AbstractSmartComponent from './abstract-smart-component.js';
 import {encode} from 'he';
 import moment from "moment";
+import {createElement} from "../utils/render";
 
 export default class FilmDetails extends AbstractSmartComponent {
   constructor(film) {
@@ -14,7 +15,6 @@ export default class FilmDetails extends AbstractSmartComponent {
     this._closeEscButtonHandler = null;
     this._deleteButtonClickHandler = null;
     this._addNewCommentHandler = null;
-
 
     this._commentEmoji = null;
     this._element = this.getElement();
@@ -87,7 +87,9 @@ export default class FilmDetails extends AbstractSmartComponent {
 
         this._commentEmoji = emoji;
 
-        this.rerender();
+        const placeHolderEmojiMarkup = createPlaceholderEmojiMarkup(this._commentEmoji);
+        const emojiLabelPlaceholder = this._element.querySelector(`.film-details__add-emoji-label`);
+        emojiLabelPlaceholder.parentNode.replaceChild(createElement(placeHolderEmojiMarkup), emojiLabelPlaceholder);
       }
     });
   }

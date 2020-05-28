@@ -23,18 +23,17 @@ export default class API {
   }
 
   getFilms() {
-    let moviesArr = [];
+    let movies = [];
     return this._load({url: `movies`})
       .then((response) =>  response.json())
-      .then((movies) => {
-        moviesArr = movies;
+      .then((response) => {
+        movies = response;
         return movies.map((movie) => this.getComment(movie))
       })
       .then((commentsPromises) => Promise.all(commentsPromises))
       .then(comments => {
-        moviesArr.forEach((movie, i) => movie.comments = comments[i]);
-
-        return Movie.parseMovies(moviesArr);
+        movies.forEach((movie, i) => movie.comments = comments[i]);
+        return Movie.parseMovies(movies);
       })
   }
 
@@ -63,7 +62,7 @@ export default class API {
   }
 
   createComment(id, body) {
-    let movie = {};
+    let film = {};
     return this._load({
       url: `comments/${id}`,
       method: Method.POST,
@@ -71,14 +70,13 @@ export default class API {
       headers: new Headers({"Content-Type": `application/json`}),
     })
       .then((response) => response.json())
-      .then((data) => movie = data.movie)
+      .then((data) => film = data.movie)
       .then((movie) => this.getComment(movie))
       .then((commentsPromises) => Promise.all(commentsPromises))
       .then((comments) => {
-        movie.comments = comments
-        return Movie.parseMovie(movie);
+        film.comments = comments
+        return Movie.parseMovie(film);
       })
-
   }
 
   deleteComment(id) {

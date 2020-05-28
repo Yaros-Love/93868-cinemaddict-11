@@ -1,5 +1,5 @@
 import FilmCommentComponent from '../components/film-details-comment';
-import {formatDate, getFilmDuration} from "../utils/common";
+import {formatDateFullDate, getFilmDuration} from "../utils/common";
 
 const tableTerms = new Map([
   [`Director`, `director`],
@@ -49,6 +49,14 @@ const createDetailsTableMarkup = (film) => {
   }).join(`\n`);
 };
 
+const createPlaceholderEmojiMarkup = (emoji) => {
+  return (
+    `<div for="add-emoji" class="film-details__add-emoji-label">
+        ${emoji ? `<img src="./images/emoji/${emoji}.png" width=55" height="55" alt="emoji">` : ``}
+    </div>`
+  );
+};
+
 
 const createControlsMarkup = (control, isActive = false) => {
   return (
@@ -57,11 +65,11 @@ const createControlsMarkup = (control, isActive = false) => {
   );
 };
 
-const createFilmDetailsTemplate = (film, emoji) => {
+const createFilmDetailsTemplate = (film) => {
   const {poster, title, originalTitle, rating, ageRating, description, comments} = film;
 
   const filmFormatFields = Object.assign({}, film, {
-    releaseDate: formatDate(film.releaseDate),
+    releaseDate: formatDateFullDate(film.releaseDate),
     duration: getFilmDuration(film.duration)
   });
   const tableMarkup = createDetailsTableMarkup(filmFormatFields);
@@ -69,6 +77,7 @@ const createFilmDetailsTemplate = (film, emoji) => {
   const watchedControl = createControlsMarkup(`watched`, film.isInWatched);
   const favoriteControl = createControlsMarkup(`favorite`, film.isInFavorite);
   const commentsMarkup = comments.map((comment) => new FilmCommentComponent(comment).getTemplate()).join(`\n`);
+  const placeholderEmojiMarkup = createPlaceholderEmojiMarkup();
 
   return (
     `<section class="film-details">
@@ -122,9 +131,7 @@ const createFilmDetailsTemplate = (film, emoji) => {
             </ul>
 
             <div class="film-details__new-comment">
-              <div for="add-emoji" class="film-details__add-emoji-label">
-              ${emoji ? `<img src="./images/emoji/${emoji}.png" width=55" height="55" alt="emoji">` : ``}
-              </div>
+              ${placeholderEmojiMarkup}
 
               <label class="film-details__comment-label">
                 <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
@@ -159,4 +166,4 @@ const createFilmDetailsTemplate = (film, emoji) => {
   );
 };
 
-export {createFilmDetailsTemplate};
+export {createFilmDetailsTemplate, createPlaceholderEmojiMarkup};

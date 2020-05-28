@@ -6,7 +6,15 @@ const getTopRatedFilms = (films) => {
 };
 
 const getMostCommentedFilms = (films) => {
-  return films.sort((a, b) => b.comments.length - a.comments.length);
+  const isAllFilmsWithoutComments = films.every((film) => film.comments.length === 0);
+
+  if (isAllFilmsWithoutComments) {
+    return [];
+  }
+
+  return films
+    .filter((film) => film.comments.length > 0)
+    .sort((a, b) => b.comments.length - a.comments.length);
 };
 
 export default class Movies {

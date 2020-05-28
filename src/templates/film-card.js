@@ -1,4 +1,4 @@
-import {formatReleaseDate, getFilmDuration} from "../utils/common";
+import {formatReleaseDateOnlyYear, getFilmDuration} from "../utils/common";
 
 const classNameForButton = new Map([
   [`watchlist`, `add-to-watchlist`],
@@ -18,7 +18,7 @@ const createFilmCardTemplate = (film) => {
   const watchListButton = createFilmControlButtonMarkup(`watchlist`, film.isInWatchList);
   const watchedButton = createFilmControlButtonMarkup(`watched`, film.isInWatched);
   const favoriteButton = createFilmControlButtonMarkup(`favorite`, film.isInFavorite);
-  const formatProductionDate = formatReleaseDate(productionDate);
+  const formatProductionDate = formatReleaseDateOnlyYear(productionDate);
   const filmDuration = getFilmDuration(duration);
 
   return (
