@@ -25,16 +25,18 @@ export default class API {
   getFilms() {
     let movies = [];
     return this._load({url: `movies`})
-      .then((response) =>  response.json())
+      .then((response) => response.json())
       .then((response) => {
         movies = response;
-        return movies.map((movie) => this.getComment(movie))
+        return movies.map((movie) => this.getComment(movie));
       })
       .then((commentsPromises) => Promise.all(commentsPromises))
-      .then(comments => {
-        movies.forEach((movie, i) => movie.comments = comments[i]);
+      .then((comments) => {
+        movies.forEach((movie, i) => {
+          movie.comments = comments[i]
+        });
         return Movie.parseMovies(movies);
-      })
+      });
   }
 
   updateFilm(id, body) {
@@ -47,18 +49,19 @@ export default class API {
     })
       .then((response) => response.json())
       .then((movie) => {
-        film = movie
-        return this.getComment(movie)
+        film = movie;
+        return this.getComment(movie);
       })
       .then((commentsPromises) => Promise.all(commentsPromises))
       .then((comments) => {
-        film.comments = comments
+        film.comments = comments;
         return Movie.parseMovie(film);
-      })}
+      });
+  }
 
   getComment(movie) {
     return this._load({url: `comments/${movie.id}`})
-        .then((response) =>  response.json())
+        .then((response) => response.json());
   }
 
   createComment(id, body) {
@@ -70,17 +73,19 @@ export default class API {
       headers: new Headers({"Content-Type": `application/json`}),
     })
       .then((response) => response.json())
-      .then((data) => film = data.movie)
+      .then((data) => {
+        return film = data.movie;
+      })
       .then((movie) => this.getComment(movie))
       .then((commentsPromises) => Promise.all(commentsPromises))
       .then((comments) => {
-        film.comments = comments
+        film.comments = comments;
         return Movie.parseMovie(film);
-      })
+      });
   }
 
   deleteComment(id) {
-    return this._load({url: `comments/${id}`, method: Method.DELETE})
+    return this._load({url: `comments/${id}`, method: Method.DELETE});
   }
 
   _load({url, method = Method.GET, body = null, headers = new Headers()}) {

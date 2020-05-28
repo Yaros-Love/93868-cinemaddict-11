@@ -27,7 +27,7 @@ const getFilterNameById = (id) => {
 };
 
 const getAllFilmsGenres = (films) => {
-  let genresAll = new Set();
+  const genresAll = new Set();
 
   films.forEach((film) => {
     film.genres.forEach((genre) => genresAll.add(genre));

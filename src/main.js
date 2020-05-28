@@ -47,7 +47,6 @@ mainElement.addEventListener(`click`, (evt) => {
   }
 });
 
-
 api.getFilms()
   .then((movies) => {
     remove(loadingComponent);
