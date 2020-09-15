@@ -7,7 +7,7 @@
   const mainElement = document.querySelector(`.main`);
   const footerStatElement = document.querySelector(`.footer__statistics`);
 
-  const filmCardMoks = [{
+   window.filmCardMoks = [{
     title: `The Dance of Life`,
     rating: `8.3`,
     year: `1929`,
@@ -207,7 +207,6 @@
     container.insertAdjacentHTML(place, template);
   };
 
-
   (() => {
     render(headerElement, createHeaderProfileTemplate(), `beforeend`);
     render(mainElement, createNavMenuTemplate(), `beforeend`);
@@ -235,7 +234,7 @@
       return b.rating - a.rating
     });
 
-    const mostCommentedFilms = filmCardMoks.sort((a, b) => {
+    const mostCommentedFilms = filmCardMoks.slice().sort((a, b) => {
       return (parseInt(b.comments.slice(0, 3), 10) - parseInt(a.comments.slice(0, 3), 10))
     });
 
@@ -247,4 +246,7 @@
     render(footerStatElement, createCountFilmsTemplate(), `beforeend`);
   })();
 
+   window.main = {
+    render : render,
+   }
 })();

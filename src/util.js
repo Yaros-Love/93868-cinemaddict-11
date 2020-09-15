@@ -11,8 +11,13 @@
     return Math.floor(randItem);
   };
 
+  const clearParent = (parent, place = `beforeend`) => {
+    parent.insertAdjacentHTML(place, ``);
+  }
+
   return window.util = {
     getRandomItem: getRandomItem,
     getRandomNum: getRandomNum,
+    clearParent : clearParent,
   };
 })();
