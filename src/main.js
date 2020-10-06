@@ -1,13 +1,19 @@
-'use strict';
+import { createHeaderProfileTemplate } from "./components/header-profile.js";
+import { createNavMenuTemplate } from "./components/nav-menu.js";
+import { createSortTemplate } from "./components/sort-menu.js";
+import { createFilmListContainerTemplate } from "./components/film_list-container.js";
+import { createFilmCardTemplate } from "./components/film-card.js";
+import { createShowMoreButton } from "./components/show_more-button.js";
+import { createFilmsListExtraTemplate } from "./components/film_list_extra-container.js";
+import { createCountFilmsTemplate } from "./components/count_films-element.js";
 
-(function () {
   const CARD_COUNT = 5;
   const EXTRA_CARDS_COUNT = 2;
   const headerElement = document.querySelector(`.header`);
   const mainElement = document.querySelector(`.main`);
   const footerStatElement = document.querySelector(`.footer__statistics`);
 
-   window.filmCardMoks = [{
+  window.filmCardMoks = [{
     title: `The Dance of Life`,
     rating: `8.3`,
     year: `1929`,
@@ -113,95 +119,96 @@
   }, {
     title: `Most commented`,
     class: `most-commented`
-  },]
-  const createHeaderProfileTemplate = () => {
-    return (
-      `<section class="header__profile profile">
-      <p class="profile__rating">Movie Buff</p>
-      <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-    </section>`
-    );
-  };
+  },];
 
-  const createNavMenuTemplate = () => {
-    return (
-      `<nav class="main-navigation">
-      <div class="main-navigation__items">
-        <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
-        <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
-        <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">4</span></a>
-        <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
-      </div>
-      <a href="#stats" class="main-navigation__additional">Stats</a>
-    </nav>`
-    );
-  };
+  // const createHeaderProfileTemplate = () => {
+  //   return (
+  //     `<section class="header__profile profile">
+  //     <p class="profile__rating">Movie Buff</p>
+  //     <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
+  //   </section>`
+  //   );
+  // };
 
-  const createSoftTemplate = () => {
-    return (
-      `<ul class="sort">
-      <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-      <li><a href="#" class="sort__button">Sort by date</a></li>
-      <li><a href="#" class="sort__button">Sort by rating</a></li>
-    </ul>`
-    );
-  };
+  // const createNavMenuTemplate = () => {
+  //   return (
+  //     `<nav class="main-navigation">
+  //     <div class="main-navigation__items">
+  //       <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
+  //       <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
+  //       <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">4</span></a>
+  //       <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
+  //     </div>
+  //     <a href="#stats" class="main-navigation__additional">Stats</a>
+  //   </nav>`
+  //   );
+  // };
 
-  const createFilmListContainerTemplate = () => {
-    return (
-      `<section class="films">
-      <section class="films-list">
-      <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-      <div class="films-list__container">
-      </div>
-    </section>
-    </section>`
-    );
-  };
+  // const createSortTemplate = () => {
+  //   return (
+  //     `<ul class="sort">
+  //     <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
+  //     <li><a href="#" class="sort__button">Sort by date</a></li>
+  //     <li><a href="#" class="sort__button">Sort by rating</a></li>
+  //   </ul>`
+  //   );
+  // };
 
-  const createFilmCardTemplate = (i, obj = filmCardMoks) => {
-    return (
-      `<article class="film-card">
-        <h3 class="film-card__title">${obj[i].title}</h3>
-        <p class="film-card__rating">${obj[i].rating}</p>
-        <p class="film-card__info">
-          <span class="film-card__year">${obj[i].year}</span>
-          <span class="film-card__duration">${obj[i].duration}</span>
-          <span class="film-card__genre">${obj[i].genre}</span>
-        </p>
-        <img src="${obj[i].img}" alt="" class="film-card__poster">
-        <p class="film-card__description">${obj[i].description}</p>
-        <a class="film-card__comments">${obj[i].comments}</a>
-        <form class="film-card__controls">
-          <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${obj[i].controls.watchlist}">Add to watchlist</button>
-          <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${obj[i].controls.watched}">Mark as watched</button>
-          <button class="film-card__controls-item button film-card__controls-item--favorite ${obj[i].controls.favorite}">Mark as favorite</button>
-        </form>
-      </article>`
-    );
-  };
+  // const createFilmListContainerTemplate = () => {
+  //   return (
+  //     `<section class="films">
+  //     <section class="films-list">
+  //     <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+  //     <div class="films-list__container">
+  //     </div>
+  //   </section>
+  //   </section>`
+  //   );
+  // };
 
-  const createShowMoreButton = () => {
-    return (
-      `<button class="films-list__show-more">Show more</button>`
-    )
-  };
+  // const createFilmCardTemplate = (i, obj = filmCardMoks) => {
+  //   return (
+  //     `<article class="film-card">
+  //       <h3 class="film-card__title">${obj[i].title}</h3>
+  //       <p class="film-card__rating">${obj[i].rating}</p>
+  //       <p class="film-card__info">
+  //         <span class="film-card__year">${obj[i].year}</span>
+  //         <span class="film-card__duration">${obj[i].duration}</span>
+  //         <span class="film-card__genre">${obj[i].genre}</span>
+  //       </p>
+  //       <img src="${obj[i].img}" alt="" class="film-card__poster">
+  //       <p class="film-card__description">${obj[i].description}</p>
+  //       <a class="film-card__comments">${obj[i].comments}</a>
+  //       <form class="film-card__controls">
+  //         <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${obj[i].controls.watchlist}">Add to watchlist</button>
+  //         <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${obj[i].controls.watched}">Mark as watched</button>
+  //         <button class="film-card__controls-item button film-card__controls-item--favorite ${obj[i].controls.favorite}">Mark as favorite</button>
+  //       </form>
+  //     </article>`
+  //   );
+  // };
 
-  const createFilmsListExtraTemplate = (i) => {
-    return (
-      `<section class="films-list--extra">
-      <h2 class="films-list__title">${titlesExtraList[i].title}</h2>
-      <div class="films-list__container ${titlesExtraList[i].class}">
-      </div>
-      </section>`
-    );
-  };
+  // const createShowMoreButton = () => {
+  //   return (
+  //     `<button class="films-list__show-more">Show more</button>`
+  //   )
+  // };
 
-  const createCountFilmsTemplate = () => {
-    return (
-      `<p>130 291 movies inside</p>`
-    )
-  }
+  // const createFilmsListExtraTemplate = (i) => {
+  //   return (
+  //     `<section class="films-list--extra">
+  //     <h2 class="films-list__title">${titlesExtraList[i].title}</h2>
+  //     <div class="films-list__container ${titlesExtraList[i].class}">
+  //     </div>
+  //     </section>`
+  //   );
+  // };
+
+  // const createCountFilmsTemplate = () => {
+  //   return (
+  //     `<p>130 291 movies inside</p>`
+  //   )
+  // }
 
   const render = (container, template, place) => {
     container.insertAdjacentHTML(place, template);
@@ -210,7 +217,7 @@
   (() => {
     render(headerElement, createHeaderProfileTemplate(), `beforeend`);
     render(mainElement, createNavMenuTemplate(), `beforeend`);
-    render(mainElement, createSoftTemplate(), `beforeend`);
+    render(mainElement, createSortTemplate(), `beforeend`);
     render(mainElement, createFilmListContainerTemplate(), `beforeend`);
 
     const filmElement = document.querySelector(`.films`);
@@ -246,7 +253,5 @@
     render(footerStatElement, createCountFilmsTemplate(), `beforeend`);
   })();
 
-   window.main = {
-    render : render,
-   }
-})();
+
+export {render}

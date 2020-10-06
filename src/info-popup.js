@@ -1,7 +1,6 @@
-'use strict';
+//  import { render } from "./main.js";
 
-(() => {
-  const filmCardPosters = document.querySelectorAll(`.film-card__poster`);
+ const filmCardPosters = document.querySelectorAll(`.film-card__poster`);
   const footerElement = document.querySelector(`.footer`);
   const render = window.main.render;
 
@@ -198,4 +197,3 @@
     });
   });
 
-})();
