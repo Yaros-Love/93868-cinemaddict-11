@@ -12,4 +12,4 @@ const createNavMenuTemplate = () => {
   );
 };
 
-export {createNavMenuTemplate}
+export {createNavMenuTemplate};

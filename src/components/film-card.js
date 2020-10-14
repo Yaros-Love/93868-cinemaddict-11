@@ -1,4 +1,4 @@
-const createFilmCardTemplate = (i, obj = filmCardMoks) => {
+const createFilmCardTemplate = (i, obj) => {
   return (
     `<article class="film-card">
       <h3 class="film-card__title">${obj[i].title}</h3>
