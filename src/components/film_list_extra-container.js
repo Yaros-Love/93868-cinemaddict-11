@@ -1,13 +1,33 @@
-const createFilmsListExtraTemplate = (array) => {
-  let listExtraTemplate = ``;
-  for (let i = 0; i < array.length; i++) {
-    listExtraTemplate = listExtraTemplate + `<section class="films-list--extra">
-    <h2 class="films-list__title">${array[i].title}</h2>
-    <div class="films-list__container ${array[i].class}">
+import {createElement} from '../util.js';
+
+const createFilmsListExtraTemplate = (arrayItem) => {
+  const {className, title} = arrayItem;
+
+  return `<section class="films-list--extra">
+    <h2 class="films-list__title">${title}</h2>
+    <div class="films-list__container ${className}">
     </div>
-    </section>\n`;
-  }
-  return listExtraTemplate;
+    </section>`;
 };
 
-export {createFilmsListExtraTemplate};
+export default class ExtraFilmContainer {
+  constructor(item) {
+    this._item = item;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmsListExtraTemplate(this._item);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

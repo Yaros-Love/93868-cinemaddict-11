@@ -1,5 +1,7 @@
-const createLocalComments = (card) => {
-  const {author, comment, date, emotion} = card.localComment;
+import {createElement} from '../util.js';
+
+const createLocalComment = (film) => {
+  const {author, comment, date, emotion} = film.localComment;
 
   return (
     `<li class="film-details__comment">
@@ -18,4 +20,24 @@ const createLocalComments = (card) => {
   );
 };
 
-export {createLocalComments};
+export default class LocalComment {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createLocalComment(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

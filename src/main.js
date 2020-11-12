@@ -1,107 +1,99 @@
-/* eslint-disable no-console */
-import { createHeaderProfileTemplate } from "./components/header-profile.js";
-import { createNavMenuTemplate } from "./components/nav-menu.js";
-import { createSortTemplate } from "./components/sort-menu.js";
-import { createFilmListContainerTemplate } from "./components/film_list-container.js";
-import { createFilmCardTemplate } from "./components/film-card.js";
-import { createShowMoreButton } from "./components/show_more-button.js";
-import { createFilmsListExtraTemplate } from "./components/film_list_extra-container.js";
-import { createCountFilmsTemplate } from "./components/count_films-element.js";
-import { cardClickHandler } from "./info-popup.js";
-import { generateCards } from "./mock/film.js";
+import HeaderProfileView from './components/header-profile.js';
+import NavMenuView from './components/nav-menu.js';
+import SortView from './components/sort-menu.js';
+import FilmListView from './components/film_list-container.js';
+import CardFilmView from './components/film-card.js';
+import ShowMoreButtonView from './components/show_more-button.js';
+import ExtraFilmContainerView from './components/film_list_extra-container.js';
+import TotalFilmsView from './components/count_films-element.js';
+import NoFilmsView from './components/no-films.js';
+import { clickMoreInfoHandler } from "./info-popup.js";
+import { generateFilms } from "./mock/film.js";
 import { generateFilters } from "./mock/filter.js";
+import { renderElement, RenderPosition } from './util.js';
+import { EXTRA_CONTAINER_TYTLES, CARD_COUNT, EXTRA_CARDS_COUNT, SHOWING_TASKS_COUNT_ON_START, SHOWING_TASKS_COUNT_BY_BUTTON } from './const.js';
 
-const CARD_COUNT = 20;
-const EXTRA_CARDS_COUNT = 2;
-const SHOWING_TASKS_COUNT_ON_START = 10;
-const SHOWING_TASKS_COUNT_BY_BUTTON = 10;
+export const films = generateFilms(CARD_COUNT);
+const filters = generateFilters();
+
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
 const footerStatElement = document.querySelector(`.footer__statistics`);
+renderElement(footerStatElement, new TotalFilmsView().getElement(), RenderPosition.BEFOREEND);
 
-// markup for extra containers
-const extraListContainers = [{
-  title: `Top rated`,
-  class: `top-rated`
-}, {
-  title: `Most commented`,
-  class: `most-commented`
-}];
+renderElement(headerElement, new HeaderProfileView().getElement(), RenderPosition.BEFOREEND);
+renderElement(mainElement, new NavMenuView(filters).getElement(), RenderPosition.BEFOREEND);
+renderElement(mainElement, new SortView().getElement(), RenderPosition.BEFOREEND);
 
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
+const renderBoard = (data) => {
+  if (data.length <= 0) {
+    renderElement(mainElement, new NoFilmsView().getElement(), RenderPosition.BEFOREEND)
+  } else {
+    renderElement(mainElement, new FilmListView().getElement(), RenderPosition.BEFOREEND);
+
+    const filmsElement = document.querySelector(`.films`);
+    const filmListElement = document.querySelector(`.films-list`);
+    const filmListContainer = filmListElement.querySelector(`.films-list__container`);
+
+    for (let i = 0; i < SHOWING_TASKS_COUNT_ON_START; i++) {
+      renderElement(filmListContainer, new CardFilmView(data[i]).getElement(), RenderPosition.BEFOREEND);
+    }
+
+    const showMoreButtonComponent = new ShowMoreButtonView();
+    renderElement(filmListElement, showMoreButtonComponent.getElement(), RenderPosition.BEFOREEND);
+
+    EXTRA_CONTAINER_TYTLES
+      .map((item) => renderElement(filmsElement, new ExtraFilmContainerView(item).getElement(), RenderPosition.BEFOREEND));
+
+    const topRatedContainer = document.querySelector(`.top-rated`);
+    const mostCommentedContaier = document.querySelector(`.most-commented`);
+
+    // render most rated and commented films
+    const mostRatedFilms = data.slice().sort((a, b) => {
+      return b.rating - a.rating;
+    });
+
+    const mostCommentedFilms = data.slice().sort((a, b) => {
+      return b.comments - a.comments;
+    });
+
+    for (let i = 0; i < EXTRA_CARDS_COUNT; i++) {
+      renderElement(topRatedContainer, new CardFilmView(mostRatedFilms[i]).getElement(), RenderPosition.BEFOREEND);
+      renderElement(mostCommentedContaier, new CardFilmView(mostCommentedFilms[i]).getElement(), RenderPosition.BEFOREEND);
+    }
+
+    //  listeners for posters, titles, comments; open popup with exta information.
+    const filmCardPosters = document.querySelectorAll(`.film-card__poster`);
+    const filmCardTitles = document.querySelectorAll(`.film-card__title`);
+    const filmCardComments = document.querySelectorAll(`.film-card__comments`);
+
+    filmCardPosters.forEach((it) => {
+      it.addEventListener(`click`, clickMoreInfoHandler);
+    });
+    filmCardTitles.forEach((it) => {
+      it.addEventListener(`click`, clickMoreInfoHandler);
+    });
+    filmCardComments.forEach((it) => {
+      it.addEventListener(`click`, clickMoreInfoHandler);
+    });
+
+    // show more films by load-more_button
+    let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
+
+    const loadMoreButton = document.querySelector(`.films-list__show-more`);
+
+    loadMoreButton.addEventListener(`click`, () => {
+      const prevTasksCount = showingTasksCount;
+      showingTasksCount = showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
+
+      films.slice(prevTasksCount, showingTasksCount)
+        .forEach((film) => renderElement(filmListContainer, new CardFilmView(film).getElement(), RenderPosition.BEFOREEND));
+
+      if (showingTasksCount >= films.length) {
+        loadMoreButton.remove();
+      }
+    });
+  }
 };
 
-export const cards = generateCards(CARD_COUNT);
-const filters = generateFilters();
-
-render(headerElement, createHeaderProfileTemplate(), `beforeend`);
-render(mainElement, createNavMenuTemplate(filters), `beforeend`);
-render(mainElement, createSortTemplate(), `beforeend`);
-render(mainElement, createFilmListContainerTemplate(), `beforeend`);
-
-const filmElement = document.querySelector(`.films`);
-const filmListElement = document.querySelector(`.films-list`);
-const filmListContainer = document.querySelector(`.films-list__container`);
-
-for (let i = 0; i < SHOWING_TASKS_COUNT_ON_START; i++) {
-  render(filmListContainer, createFilmCardTemplate(cards[i]), `beforeend`);
-}
-
-render(filmListElement, createShowMoreButton(), `beforeend`);
-
-render(filmElement, createFilmsListExtraTemplate(extraListContainers), `beforeend`);
-
-const topRatedContainer = document.querySelector(`.top-rated`);
-const mostCommentedContaier = document.querySelector(`.most-commented`);
-
-// render most rated and commented films
-const mostRatedFilms = cards.slice().sort((a, b) => {
-  return b.rating - a.rating;
-});
-
-const mostCommentedFilms = cards.slice().sort((a, b) => {
-  return b.comments - a.comments;
-});
-
-for (let i = 0; i < EXTRA_CARDS_COUNT; i++) {
-  render(topRatedContainer, createFilmCardTemplate(mostRatedFilms[i]), `beforeend`);
-  render(mostCommentedContaier, createFilmCardTemplate(mostCommentedFilms[i]), `beforeend`);
-}
-
-render(footerStatElement, createCountFilmsTemplate(), `beforeend`);
-
-//  listeners for posters, titles, comments; open popup with exta information.
-const filmCardPosters = document.querySelectorAll(`.film-card__poster`);
-const filmCardTitles = document.querySelectorAll(`.film-card__title`);
-const filmCardComments = document.querySelectorAll(`.film-card__comments`);
-
-filmCardPosters.forEach((it) => {
-  it.addEventListener(`click`, cardClickHandler);
-});
-filmCardTitles.forEach((it) => {
-  it.addEventListener(`click`, cardClickHandler);
-});
-filmCardComments.forEach((it) => {
-  it.addEventListener(`click`, cardClickHandler);
-});
-
-// show more films by load-more_button
-let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
-
-const loadMoreButton = document.querySelector(`.films-list__show-more`);
-
-loadMoreButton.addEventListener(`click`, () => {
-  const prevTasksCount = showingTasksCount;
-  showingTasksCount = showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
-
-  cards.slice(prevTasksCount, showingTasksCount)
-    .forEach((card) => render(filmListContainer, createFilmCardTemplate(card), `beforeend`));
-
-  if (showingTasksCount >= cards.length) {
-    loadMoreButton.remove();
-  }
-});
-
-
-export { render };
+renderBoard(films);

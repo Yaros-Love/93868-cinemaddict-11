@@ -1,40 +1,38 @@
-import { render } from "./main.js";
-import { createMoreInfoTemplate } from "./components/more_info.js";
-import {createLocalComments} from "./components/local_comments.js";
-import {cards} from "./main.js";
-import {ESC_KEY_CODE} from "./const.js";
-
-const COMMENTS_COUNT = 4;
+import MoreInfoView from './components/more_info.js';
+import LocalCommentView from './components/local_comments.js';
+import {renderElement, RenderPosition} from "./util.js";
+import {films} from "./main.js";
+import {ESC_KEY_CODE, COMMENTS_COUNT} from "./const.js";
 
 const footerElement = document.querySelector(`.footer`);
 
-//  close by esc press
-const closeByEsc = (evt) => {
-  let filmDetailsElem = document.querySelector(`.film-details`);
-  // eslint-disable-next-line no-unused-expressions
-  evt.keyCode === ESC_KEY_CODE ? filmDetailsElem.remove() : false;
+export const clickMoreInfoHandler = (evt) => {
+  if (!document.querySelector(`.film-details`)) {
+    const film = films[evt.target.parentElement.id];
+    const moreInfoComponent = new MoreInfoView(film);
+    renderElement(footerElement, moreInfoComponent.getElement(), RenderPosition.BEFOREEND);
 
-  document.removeEventListener(`keydown`, closeByEsc);
-};
+    const localCommentsContainer = moreInfoComponent.getElement().querySelector(`.film-details__comments-list`);
 
-const cardClickHandler = (evt) => {
-  const film = cards[evt.target.parentElement.id];
+    // render local comments in popup
+    for (let i = 0; i < COMMENTS_COUNT; i++) {
+      renderElement(localCommentsContainer, new LocalCommentView(film).getElement(), RenderPosition.BEFOREEND);
+    }
 
-  render(footerElement, createMoreInfoTemplate(film), `afterend`);
+    // close-popup listeneners
+    const closeByEsc = (evt) => {
+    // eslint-disable-next-line no-unused-expressions
+      evt.keyCode === ESC_KEY_CODE ? moreInfoComponent.getElement().remove() && moreInfoComponent.removeElement() : false;
 
-  let filmDetailsElem = document.querySelector(`.film-details`);
-  const localCommentsContainer = filmDetailsElem.querySelector(`.film-details__comments-list`);
+      document.removeEventListener(`keydown`, closeByEsc);
+    };
 
-  for (let i = 0; i < COMMENTS_COUNT; i++) {
-    render(localCommentsContainer, createLocalComments(film), `beforeend`);
+    const closeButElem = moreInfoComponent.getElement().querySelector(`.film-details__close-btn`);
+    closeButElem.addEventListener(`click`, () => {
+      moreInfoComponent.getElement().remove();
+      moreInfoComponent.removeElement();
+    });
+
+    document.addEventListener(`keydown`, closeByEsc);
   }
-
-  const closeButElem = document.querySelector(`.film-details__close-btn`);
-  closeButElem.addEventListener(`click`, () => {
-    filmDetailsElem.remove();
-  });
-
-  document.addEventListener(`keydown`, closeByEsc);
 };
-
-export {cardClickHandler};

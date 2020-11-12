@@ -1,12 +1,16 @@
-const createMoreInfoTemplate = (card) => {
-  const {poster, title, rating, duration, year, genre, totalComments, ageRating, originalFilmName, director, writers, actors, country, description} = card;
+import {createElement} from '../util.js';
 
-  const {isWatchlist, isWatched, isFavorite} = card.userDetails;
+const createMoreInfoTemplate = (film) => {
+  const {poster, title, rating, duration, year, genre, totalComments, ageRating, originalFilmName, director, writers, actors, country, description} = film;
+
+  const {isWatchlist, isWatched, isFavorite} = film.userDetails;
 
   const writersStr = writers.join(`, `);
   const actorsStr = actors.join(`, `);
   const genreStr = genre.join(`, `);
-
+  const isWatchlistClassName = isWatchlist ? `checked` : ``;
+  const isWatchedClassName = isWatched ? `checked` : ``;
+  const isFavoriteClassName = isFavorite ? `checked` : ``;
   const endingWordComment = totalComments === 1 ? `Comment` : `Comments`;
 
   return (
@@ -74,13 +78,13 @@ const createMoreInfoTemplate = (card) => {
         </div>
 
         <section class="film-details__controls">
-          <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${isWatchlist ? `checked` : ``}>
+          <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${isWatchlistClassName}>
           <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-          <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${isWatched ? `checked` : ``}>
+          <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${isWatchedClassName}>
           <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
 
-          <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${isFavorite ? `checked` : ``}>
+          <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${isFavoriteClassName}>
           <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
         </section>
       </div>
@@ -129,4 +133,25 @@ const createMoreInfoTemplate = (card) => {
   );
 };
 
-export { createMoreInfoTemplate };
+export default class MoreInfo {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMoreInfoTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
+

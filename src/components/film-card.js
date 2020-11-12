@@ -1,6 +1,8 @@
-const createFilmCardTemplate = (card) => {
-  const {title, rating, year, duration, genre, poster, description, totalComments, id} = card;
-  const {isWatchlist, isWatched, isFavorite} = card.userDetails;
+import {createElement} from '../util.js';
+
+const createFilmCardTemplate = (film) => {
+  const {title, rating, year, duration, genre, poster, description, totalComments, id} = film;
+  const {isWatchlist, isWatched, isFavorite} = film.userDetails;
 
   const endingWordComment = totalComments === 1 ? `comment` : `comments`;
 
@@ -27,4 +29,24 @@ const createFilmCardTemplate = (card) => {
   );
 };
 
-export {createFilmCardTemplate};
+export default class Card {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCardTemplate(this._film)
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

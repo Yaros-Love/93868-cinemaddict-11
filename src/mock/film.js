@@ -18,7 +18,7 @@ const filmDescriptions = [`John Mason (James Stewart) is a young, somewhat timid
 
 const date = `2019-05-11T16:12:32.554Z`;
 
-const generateCard = (item, index) => {
+const generateFilm = (item, index) => {
   return {
     id: index,
     title: getRandomArrayItem(filmNames),
@@ -51,11 +51,9 @@ const generateCard = (item, index) => {
   };
 };
 
-const generateCards = (count) => {
+export const generateFilms = (count) => {
   return new Array(count)
     .fill(``)
-    .map(generateCard);
+    .map(generateFilm);
 };
-
-export { generateCards };
 
