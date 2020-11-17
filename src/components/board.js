@@ -1,18 +1,14 @@
 import {createElement} from '../util.js';
+import {createBoardTemplate} from '../templates/board.js';
 
-const createCountFilmsTemplate = () => {
-  return (
-    `<p>130 291 movies inside</p>`
-  );
-};
-
-export default class TotalFilms {
-  constructor() {
+export default class FilmsContainer {
+  constructor(films) {
+    this._films = films;
     this._element = null;
   }
 
   getTemplate() {
-    return createCountFilmsTemplate();
+    return createBoardTemplate(this._films);
   }
 
   getElement() {
@@ -26,4 +22,3 @@ export default class TotalFilms {
     this._element = null;
   }
 }
-

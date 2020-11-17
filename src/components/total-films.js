@@ -1,20 +1,13 @@
 import {createElement} from '../util.js';
+import {createCountFilmsTemplate} from '../templates/total-films.js';
 
-const createNoFilmsTemplate = () => {
-  return `<section class="films">
-  <section class="films-list">
-    <h2 class="films-list__title">There are no movies in our database</h2>
-  </section>
-  </section>`;
-};
-
-export default class NoFilms {
+export default class TotalFilms {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createNoFilmsTemplate();
+    return createCountFilmsTemplate();
   }
 
   getElement() {
@@ -28,3 +21,4 @@ export default class NoFilms {
     this._element = null;
   }
 }
+

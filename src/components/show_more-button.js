@@ -1,10 +1,5 @@
 import {createElement} from '../util.js';
-
-const createShowMoreButtonTemplate = () => {
-  return (
-    `<button class="films-list__show-more">Show more</button>`
-  );
-};
+import {createShowMoreButtonTemplate} from '../templates/show_more-button.js';
 
 export default class NavMenu {
   constructor() {

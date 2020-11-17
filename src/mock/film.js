@@ -1,4 +1,4 @@
-import { getRandomArrayItem, getRandomIntegerNumber, getRandomNumber } from '../util.js';
+import {getRandomArrayItem, getRandomIntegerNumber, getRandomNumber} from '../util.js';
 
 const filmNames = [`The Dance of Life`, `Sagebrush Trail`, `The Man with the Golden Arm`, `Santa Claus Conquers the Martians`, `Popeye the Sailor Meets Sindbad the Sailor`, `The Great Flamarion`];
 
@@ -52,8 +52,12 @@ const generateFilm = (item, index) => {
 };
 
 export const generateFilms = (count) => {
-  return new Array(count)
+  if (count) {
+    return new Array(count)
     .fill(``)
     .map(generateFilm);
+  } else {
+    return null;
+  }
 };
 
