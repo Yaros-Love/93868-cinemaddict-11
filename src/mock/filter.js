@@ -5,7 +5,7 @@ const generateFilters = () => {
     return {
       name: it,
       count: it === `All` ? `` : Math.floor(Math.random() * 10),
-    }
+    };
   });
 };
 

@@ -7,7 +7,7 @@ export default class NavMenu {
   }
 
   getTemplate() {
-    return createShowMoreButtonTemplate()
+    return createShowMoreButtonTemplate();
   }
 
   getElement() {

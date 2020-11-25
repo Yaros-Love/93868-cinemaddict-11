@@ -7,11 +7,11 @@ import CardFilmView from './components/film-card.js';
 import ShowMoreButtonView from './components/show_more-button.js';
 import ExtraFilmContainerView from './components/film_list_extra-container.js';
 import TotalFilmsView from './components/total-films.js';
-import { clickMoreInfoHandler } from "./info-popup.js";
-import { generateFilms } from "./mock/film.js";
-import { generateFilters } from "./mock/filter.js";
-import { render, RenderPosition } from './util.js';
-import { EXTRA_CONTAINER_TYTLES, CARD_COUNT, EXTRA_CARDS_COUNT, SHOWING_TASKS_COUNT_ON_START, SHOWING_TASKS_COUNT_BY_BUTTON } from './const.js';
+import {clickMoreInfoHandler} from "./info-popup.js";
+import {generateFilms} from "./mock/film.js";
+import {generateFilters} from "./mock/filter.js";
+import {render, RenderPosition} from './util.js';
+import {EXTRA_CONTAINER_TYTLES, CARD_COUNT, EXTRA_CARDS_COUNT, SHOWING_TASKS_COUNT_ON_START, SHOWING_TASKS_COUNT_BY_BUTTON} from './const.js';
 
 export const films = generateFilms(CARD_COUNT);
 const filters = generateFilters();

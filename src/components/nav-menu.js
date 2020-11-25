@@ -8,7 +8,7 @@ export default class NavMenu {
   }
 
   getTemplate() {
-    return createNavMenuTemplate(this._filters)
+    return createNavMenuTemplate(this._filters);
   }
 
   getElement() {

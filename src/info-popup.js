@@ -8,8 +8,6 @@ const footerElement = document.querySelector(`.footer`);
 
 export const clickMoreInfoHandler = (evt) => {
   if (!document.querySelector(`.film-details`)) {
-    // eslint-disable-next-line no-console
-    console.log(evt);
     const film = films[evt.target.parentElement.id];
     const moreInfoComponent = new MoreInfoView(film);
     render(footerElement, moreInfoComponent.getElement(), RenderPosition.BEFOREEND);
@@ -22,9 +20,11 @@ export const clickMoreInfoHandler = (evt) => {
     }
 
     // close-popup listeneners
-    const closeByEsc = (evt) => {
-    // eslint-disable-next-line no-unused-expressions
-      evt.keyCode === ESC_KEY_CODE ? moreInfoComponent.getElement().remove() && moreInfoComponent.removeElement() : false;
+    const closeByEsc = (e) => {
+      if (e.keyCode === ESC_KEY_CODE) {
+        moreInfoComponent.getElement().remove();
+        moreInfoComponent.removeElement();
+      }
 
       document.removeEventListener(`keydown`, closeByEsc);
     };

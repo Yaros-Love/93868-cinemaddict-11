@@ -8,7 +8,7 @@ export default class Card {
   }
 
   getTemplate() {
-    return createFilmCardTemplate(this._film)
+    return createFilmCardTemplate(this._film);
   }
 
   getElement() {
