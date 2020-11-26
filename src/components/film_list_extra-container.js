@@ -1,24 +1,13 @@
-import {createElement} from '../util.js';
 import {createFilmsListExtraTemplate} from '../templates/film_list_extra-container';
+import AbstractComponent from './abstract-component.js';
 
-export default class ExtraFilmContainer {
+export default class ExtraFilmContainer extends AbstractComponent {
   constructor(item) {
+    super();
     this._item = item;
-    this._element = null;
   }
 
   getTemplate() {
     return createFilmsListExtraTemplate(this._item);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

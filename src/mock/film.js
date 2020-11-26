@@ -1,4 +1,4 @@
-import {getRandomArrayItem, getRandomIntegerNumber, getRandomNumber} from '../util.js';
+import {getRandomArrayItem, getRandomIntegerNumber, getRandomNumber} from '../utils/util.js';
 
 const filmNames = [`The Dance of Life`, `Sagebrush Trail`, `The Man with the Golden Arm`, `Santa Claus Conquers the Martians`, `Popeye the Sailor Meets Sindbad the Sailor`, `The Great Flamarion`];
 

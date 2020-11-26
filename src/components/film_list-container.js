@@ -1,23 +1,8 @@
-import {createElement} from '../util.js';
 import {createFilmListContainerTemplate} from '../templates/film_list-container';
+import AbstractComponent from './abstract-component.js';
 
-export default class FilmListContainer {
-  constructor() {
-    this._element = null;
-  }
-
+export default class FilmListContainer extends AbstractComponent {
   getTemplate() {
     return createFilmListContainerTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

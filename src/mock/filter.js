@@ -1,6 +1,6 @@
 const filterNames = [`All`, `Watchlist`, `History`, `Favorites`];
 
-const generateFilters = () => {
+export const generateFilters = () => {
   return filterNames.map((it) => {
     return {
       name: it,
@@ -8,5 +8,3 @@ const generateFilters = () => {
     };
   });
 };
-
-export {generateFilters};

@@ -1,24 +1,14 @@
-import {createElement} from '../util.js';
 import {createBoardTemplate} from '../templates/board.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class FilmsContainer {
+export default class Board extends AbstractComponent {
   constructor(films) {
+    super();
     this._films = films;
-    this._element = null;
   }
 
   getTemplate() {
     return createBoardTemplate(this._films);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
-  }
 }

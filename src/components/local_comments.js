@@ -1,24 +1,13 @@
-import {createElement} from '../util.js';
 import {createLocalComment} from '../templates/local_comment.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class LocalComment {
+export default class LocalComment extends AbstractComponent {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
   }
 
   getTemplate() {
     return createLocalComment(this._film);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

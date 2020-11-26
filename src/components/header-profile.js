@@ -1,24 +1,9 @@
-import {createElement} from '../util.js';
 import {createHeaderProfileTemplate} from '../templates/header-profile.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class HeaderProfile {
-  constructor() {
-    this._element = null;
-  }
-
+export default class HeaderProfile extends AbstractComponent {
   getTemplate() {
     return createHeaderProfileTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 
