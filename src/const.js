@@ -1,6 +1,6 @@
 export const ESC_KEY_CODE = 27;
 
-export const EXTRA_CONTAINER_TYTLES = [{
+export const EXTRA_BOARD_TYTLES = [{
   title: `Top rated`,
   className: `top-rated`
 }, {
