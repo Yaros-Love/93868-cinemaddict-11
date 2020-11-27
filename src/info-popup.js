@@ -1,15 +1,16 @@
 import MoreInfoView from './components/more_info.js';
 import LocalCommentView from './components/local_comments.js';
-import {render, RenderPosition} from './utils/render.js';
+import {render, remove, RenderPosition} from './utils/render.js';
 import {films} from "./main.js";
 import {ESC_KEY_CODE, COMMENTS_COUNT} from './const.js';
 
 const footerElement = document.querySelector(`.footer`);
 
-export const clickMoreInfoHandler = (evt) => {
+export const moreInfoClickHandler = (evt) => {
   if (!document.querySelector(`.film-details`)) {
     const film = films[evt.target.parentElement.id];
     const moreInfoComponent = new MoreInfoView(film);
+
     render(footerElement, moreInfoComponent, RenderPosition.BEFOREEND);
 
     const localCommentsContainer = moreInfoComponent.getElement().querySelector(`.film-details__comments-list`);
@@ -30,9 +31,9 @@ export const clickMoreInfoHandler = (evt) => {
     };
 
     const closeButElem = moreInfoComponent.getElement().querySelector(`.film-details__close-btn`);
+    
     closeButElem.addEventListener(`click`, () => {
-      moreInfoComponent.getElement().remove();
-      moreInfoComponent.removeElement();
+      remove(moreInfoComponent);
     });
 
     document.addEventListener(`keydown`, closeByEsc);

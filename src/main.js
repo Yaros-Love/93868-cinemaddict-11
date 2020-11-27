@@ -7,11 +7,11 @@ import CardFilmView from './components/film-card.js';
 import ShowMoreButtonView from './components/show_more-button.js';
 import ExtraFilmContainerView from './components/film_list_extra-container.js';
 import TotalFilmsView from './components/total-films.js';
-import {clickMoreInfoHandler} from "./info-popup.js";
+import {moreInfoClickHandler} from "./info-popup.js";
 import {generateFilms} from "./mock/film.js";
 import {generateFilters} from "./mock/filter.js";
-import {render, RenderPosition} from './utils/render.js';
-import {EXTRA_CONTAINER_TYTLES, CARD_COUNT, EXTRA_CARDS_COUNT, SHOWING_TASKS_COUNT_ON_START, SHOWING_TASKS_COUNT_BY_BUTTON} from './const.js';
+import {render, remove, RenderPosition} from './utils/render.js';
+import {EXTRA_CONTAINER_TYTLES, CARD_COUNT, SHOWING_TASKS_COUNT_ON_START, SHOWING_TASKS_COUNT_BY_BUTTON} from './const.js';
 
 export const films = generateFilms(CARD_COUNT);
 const filters = generateFilters();
@@ -24,7 +24,12 @@ render(headerElement, new HeaderProfileView(), RenderPosition.BEFOREEND);
 render(mainElement, new NavMenuView(filters), RenderPosition.BEFOREEND);
 render(mainElement, new SortView(), RenderPosition.BEFOREEND);
 
-// eslint-disable-next-line no-shadow
+const renderFilmCard = (container, film, handler) => {
+  const cardFilmComponent = new CardFilmView(film);
+  render(container, cardFilmComponent, RenderPosition.BEFOREEND);
+  cardFilmComponent.setCardClickHandler(handler);
+};
+
 const renderBoard = (filmsArray) => {
   const Board = new BoardView(filmsArray);
 
@@ -37,7 +42,7 @@ const renderBoard = (filmsArray) => {
     render(filmListElement, FilmListContainer, RenderPosition.BEFOREEND);
 
     for (let i = 0; i < SHOWING_TASKS_COUNT_ON_START; i++) {
-      render(FilmListContainer.getElement(), new CardFilmView(filmsArray[i]), RenderPosition.BEFOREEND);
+      renderFilmCard(FilmListContainer.getElement(), filmsArray[i], moreInfoClickHandler);
     }
 
     const showMoreButtonComponent = new ShowMoreButtonView();
@@ -58,32 +63,20 @@ const renderBoard = (filmsArray) => {
       return b.comments - a.comments;
     });
 
-    for (let i = 0; i < EXTRA_CARDS_COUNT; i++) {
-      render(topRatedContainer, new CardFilmView(mostRatedFilms[i]), RenderPosition.BEFOREEND);
-      render(mostCommentedContaier, new CardFilmView(mostCommentedFilms[i]), RenderPosition.BEFOREEND);
-    }
-
-    //  listeners for posters, titles, comments; open popup with exta information.
-    const filmCardPosters = document.querySelectorAll(`.film-card__poster`);
-    const filmCardTitles = document.querySelectorAll(`.film-card__title`);
-    const filmCardComments = document.querySelectorAll(`.film-card__comments`);
-
-    filmCardPosters.forEach((it) => {
-      it.addEventListener(`click`, clickMoreInfoHandler);
+    mostRatedFilms.slice(0, 2)
+    .map((film) => {
+      renderFilmCard(topRatedContainer, film, moreInfoClickHandler);
     });
-    filmCardTitles.forEach((it) => {
-      it.addEventListener(`click`, clickMoreInfoHandler);
-    });
-    filmCardComments.forEach((it) => {
-      it.addEventListener(`click`, clickMoreInfoHandler);
+
+    mostCommentedFilms.slice(0, 2)
+    .map((film) => {
+      renderFilmCard(mostCommentedContaier, film, moreInfoClickHandler);
     });
 
     // show more films by load-more_button
     let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
 
-    const loadMoreButton = document.querySelector(`.films-list__show-more`);
-
-    loadMoreButton.addEventListener(`click`, () => {
+    showMoreButtonComponent.setClickHandler(() => {
       const prevTasksCount = showingTasksCount;
       showingTasksCount = showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
 
@@ -91,7 +84,7 @@ const renderBoard = (filmsArray) => {
         .forEach((film) => render(FilmListContainer.getElement(), new CardFilmView(film), RenderPosition.BEFOREEND));
 
       if (showingTasksCount >= filmsArray.length) {
-        loadMoreButton.remove();
+        remove(showMoreButtonComponent);
       }
     });
   }
