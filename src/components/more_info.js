@@ -10,5 +10,9 @@ export default class MoreInfo extends AbstractComponent {
   getTemplate() {
     return createMoreInfoTemplate(this._film);
   }
+
+  setCloseButtonClickHandler(handler) {
+    this._element.querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
+  }
 }
 
