@@ -23,7 +23,7 @@ const generateFilm = (item, index) => {
     id: index,
     title: getRandomArrayItem(filmNames),
     originalFilmName: `Xxx`,
-    rating: getRandomNumber(0, 10).toFixed(1),
+    rating: Number(getRandomNumber(0, 10).toFixed(1)),
     year: getRandomIntegerNumber(1920, 2020),
     country: getRandomArrayItem(countries),
     director: `Anthony Mann`,

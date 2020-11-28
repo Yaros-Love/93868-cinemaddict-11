@@ -1,8 +1,7 @@
 import HeaderProfileComponenet from './components/header-profile.js';
 import NavMenuComponent from './components/nav-menu.js';
-import SortComponent from './components/sort-menu.js';
 import TotalFilmsComponent from './components/total-films.js';
-import BoardController from './controllers/board.js';
+import PageController from './controllers/page.js';
 import {generateFilms} from "./mock/film.js";
 import {generateFilters} from "./mock/filter.js";
 import {render, RenderPosition} from './utils/render.js';
@@ -17,10 +16,9 @@ const filters = generateFilters();
 
 render(headerElement, new HeaderProfileComponenet(), RenderPosition.BEFOREEND);
 render(mainElement, new NavMenuComponent(filters), RenderPosition.BEFOREEND);
-render(mainElement, new SortComponent(), RenderPosition.BEFOREEND);
 
-const boardController = new BoardController();
+const pageController = new PageController();
 
-boardController.render(films);
+pageController.render(films);
 render(footerStatElement, new TotalFilmsComponent(), RenderPosition.BEFOREEND);
 
